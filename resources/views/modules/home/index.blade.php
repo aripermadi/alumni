@@ -121,6 +121,7 @@
     @media (max-width: 768px) {
         .hero-section, .hero-overlay {
             min-height: 200px;
+            height: 100%;
             padding: 30px 0;
         }
         .hero-section h1 {
