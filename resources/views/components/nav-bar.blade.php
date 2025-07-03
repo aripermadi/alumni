@@ -2,7 +2,7 @@
 @php
     use Illuminate\Support\Facades\Auth;
 @endphp
-<nav class="navbar navbar-expand-lg navbar-light custom-navbar shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light custom-navbar d-none d-lg-block shadow-sm" style="display:none;@media (min-width:992px){display:flex!important;}">
     <div class="container">
         <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
             <i class="fas fa-graduation-cap me-2 text-primary"></i> Alumni
@@ -25,6 +25,11 @@
                 <li class="nav-item">
                     <a class="nav-link px-3 {{ $active === 'events' ? 'active' : '' }}" href="/events">
                         <i class="fas fa-calendar-alt me-1"></i> Event
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-3 {{ $active === 'alumni' ? 'active' : '' }}" href="/alumni">
+                        <i class="fas fa-users me-1"></i> Alumni
                     </a>
                 </li>
                 @auth
