@@ -49,7 +49,3 @@ Route::post('/logout', function (Request $request) {
     $request->session()->regenerateToken();
     return redirect('/');
 })->name('logout')->middleware('auth');
-
-Route::get('/alumni', function () {
-    return view('modules.alumni.index', ['active' => 'alumni']);
-});

@@ -18,10 +18,6 @@
             <i class="fas fa-calendar-alt"></i>
             <span>Event</span>
         </a>
-        <a href="/alumni" class="col nav-item {{ $active === 'alumni' ? 'active' : '' }} text-decoration-none">
-            <i class="fas fa-users"></i>
-            <span>Alumni</span>
-        </a>
         @auth
             <a href="/profile" class="col nav-item {{ $active === 'profile' ? 'active' : '' }} text-decoration-none">
                 <i class="fas fa-user"></i>

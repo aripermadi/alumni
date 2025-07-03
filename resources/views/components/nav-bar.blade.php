@@ -27,11 +27,6 @@
                         <i class="fas fa-calendar-alt me-1"></i> Event
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link px-3 {{ $active === 'alumni' ? 'active' : '' }}" href="/alumni">
-                        <i class="fas fa-users me-1"></i> Alumni
-                    </a>
-                </li>
                 @auth
                     <li class="nav-item">
                         <a class="nav-link px-3 {{ $active === 'profile' ? 'active' : '' }}" href="/profile">
