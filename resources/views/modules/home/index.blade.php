@@ -17,8 +17,8 @@
     </div>
 
     <div class="quick-actions mb-4">
-        <div class="row g-3">
-            <div class="col-6">
+        <div class="d-none d-md-flex row g-3">
+            <div class="col-md-3">
                 <a href="/jobs" class="text-decoration-none">
                     <div class="quick-action-card d-flex flex-column align-items-center justify-content-center">
                         <i class="fas fa-briefcase mb-2"></i>
@@ -26,7 +26,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-6">
+            <div class="col-md-3">
                 <a href="/news" class="text-decoration-none">
                     <div class="quick-action-card d-flex flex-column align-items-center justify-content-center">
                         <i class="fas fa-newspaper mb-2"></i>
@@ -34,7 +34,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-6">
+            <div class="col-md-3">
                 <a href="/events" class="text-decoration-none">
                     <div class="quick-action-card d-flex flex-column align-items-center justify-content-center">
                         <i class="fas fa-calendar-alt mb-2"></i>
@@ -42,7 +42,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-6">
+            <div class="col-md-3">
                 <a href="/network" class="text-decoration-none">
                     <div class="quick-action-card d-flex flex-column align-items-center justify-content-center">
                         <i class="fas fa-network-wired mb-2"></i>
@@ -50,6 +50,32 @@
                     </div>
                 </a>
             </div>
+        </div>
+        <div class="d-flex d-md-none flex-row overflow-auto gap-3 px-1" style="scroll-snap-type: x mandatory;">
+            <a href="/jobs" class="text-decoration-none flex-shrink-0" style="width:110px;scroll-snap-align:center;">
+                <div class="quick-action-card d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-briefcase mb-2"></i>
+                    <span class="mt-1">Lowongan</span>
+                </div>
+            </a>
+            <a href="/news" class="text-decoration-none flex-shrink-0" style="width:110px;scroll-snap-align:center;">
+                <div class="quick-action-card d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-newspaper mb-2"></i>
+                    <span class="mt-1">Berita</span>
+                </div>
+            </a>
+            <a href="/events" class="text-decoration-none flex-shrink-0" style="width:110px;scroll-snap-align:center;">
+                <div class="quick-action-card d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-calendar-alt mb-2"></i>
+                    <span class="mt-1">Event</span>
+                </div>
+            </a>
+            <a href="/network" class="text-decoration-none flex-shrink-0" style="width:110px;scroll-snap-align:center;">
+                <div class="quick-action-card d-flex flex-column align-items-center justify-content-center">
+                    <i class="fas fa-network-wired mb-2"></i>
+                    <span class="mt-1">Jaringan</span>
+                </div>
+            </a>
         </div>
     </div>
 
