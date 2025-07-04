@@ -19,9 +19,9 @@
                     <a href="{{ route('profile.edit') }}" class="btn btn-primary rounded-pill px-4 py-2 d-flex align-items-center fw-semibold shadow-sm" style="font-size:1.1rem; transition:all .2s;">
                         <i class="fas fa-user-edit me-2"></i> Edit Profil
                     </a>
-                    <a href="#" onclick="navigator.share ? navigator.share({title: document.title, url: window.location.href}) : alert('Fitur tidak didukung browser ini'); return false;" class="btn btn-info rounded-pill px-4 py-2 d-flex align-items-center fw-semibold shadow-sm" style="font-size:1.1rem; transition:all .2s;">
+                    {{-- <a href="#" onclick="navigator.share ? navigator.share({title: document.title, url: window.location.href}) : alert('Fitur tidak didukung browser ini'); return false;" class="btn btn-info rounded-pill px-4 py-2 d-flex align-items-center fw-semibold shadow-sm" style="font-size:1.1rem; transition:all .2s;">
                         <i class="fas fa-share-alt me-2"></i> Bagikan Profil
-                    </a>
+                    </a> --}}
                     <a href="{{ route('profile.password') }}" class="btn btn-warning rounded-pill px-4 py-2 d-flex align-items-center fw-semibold shadow-sm" style="font-size:1.1rem; transition:all .2s;">
                         <i class="fas fa-key me-2"></i> Ganti Password
                     </a>
