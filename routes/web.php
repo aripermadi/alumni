@@ -16,7 +16,7 @@ use App\Http\Controllers\ForumController;
 
 Route::get('/', function () {
     $upcomingEvents = Event::whereDate('event_date', '>=', now())
-        ->orderBy('event_date')
+        ->orderByDesc('event_date')
         ->limit(3)
         ->get();
     $latestNews = News::orderByDesc('published_at')
