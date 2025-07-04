@@ -1,12 +1,12 @@
 {{-- Floating Chat Button --}}
-<div id="floating-chat-btn" style="position:fixed;bottom:24px;right:24px;z-index:9999;">
+<div id="floating-chat-btn" style="position:fixed;bottom:80px;right:24px;z-index:9999;">
     <button class="btn btn-primary rounded-circle shadow" style="width:56px;height:56px;" onclick="toggleChatBox()">
         <i class="fas fa-comments fa-lg"></i>
         <span id="chat-notif-badge" style="display:none;position:absolute;top:8px;right:8px;background:red;color:white;border-radius:50%;width:18px;height:18px;font-size:12px;line-height:18px;text-align:center;">!</span>
     </button>
 </div>
 {{-- Floating Chat Box --}}
-<div id="chat-box" style="display:none;position:fixed;bottom:90px;right:24px;width:340px;z-index:9999;background:#fff;border-radius:1rem;box-shadow:0 4px 24px rgba(13,110,253,0.13);overflow:hidden;">
+<div id="chat-box" style="display:none;position:fixed;bottom:150px;right:24px;width:340px;z-index:9999;background:#fff;border-radius:1rem;box-shadow:0 4px 24px rgba(13,110,253,0.13);overflow:hidden;">
     <div class="p-3 border-bottom bg-primary text-white d-flex justify-content-between align-items-center">
         <span><i class="fas fa-comments me-2"></i>Chat</span>
         <button class="btn btn-sm btn-light" onclick="toggleChatBox()">&times;</button>
@@ -130,3 +130,18 @@ function checkNewMessages() {
     });
 }
 </script>
+
+<style>
+  @media (max-width: 600px) {
+    #floating-chat-btn {
+      bottom: 110px !important;
+      right: 16px !important;
+    }
+    #chat-box {
+      bottom: 180px !important;
+      right: 8px !important;
+      width: 98vw !important;
+      max-width: 360px;
+    }
+  }
+</style>
