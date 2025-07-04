@@ -1,77 +1,49 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="search-bar mb-4">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Cari lowongan kerja...">
-            <button class="btn btn-primary">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h2 class="fw-bold mb-0">Daftar Lowongan Kerja</h2>
+        <a href="{{ route('jobs.create') }}" class="btn btn-primary rounded-pill px-4 py-2 d-flex align-items-center fw-semibold shadow-sm">
+            <i class="fas fa-plus me-2"></i> Tambah Lowongan
+        </a>
     </div>
-
-    <div class="categories mb-4">
-        <div class="d-flex gap-2 overflow-auto">
-            <button class="btn btn-outline-primary active">Semua</button>
-            <button class="btn btn-outline-primary">Dokter</button>
-            <button class="btn btn-outline-primary">Perawat</button>
-            <button class="btn btn-outline-primary">Apoteker</button>
-            <button class="btn btn-outline-primary">Admin</button>
-        </div>
-    </div>
-
-    <div class="jobs-list">
-        <div class="card mb-3">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <h5 class="card-title">Dokter Umum</h5>
-                        <p class="text-muted small mb-2">RS Medika Sejahtera</p>
-                        <div class="d-flex gap-2 mb-2">
-                            <span class="badge bg-primary">Full-time</span>
-                            <span class="badge bg-success">Rp 15-20jt</span>
-                        </div>
-                        <p class="card-text">Dibutuhkan dokter umum untuk bergabung dengan tim kami...</p>
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+    <div class="row g-4">
+        @forelse($jobs as $job)
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0 rounded-4 position-relative">
+                <div class="card-body d-flex flex-column justify-content-between p-4">
+                    @if($job->logo)
+                        <div class="text-center mb-2"><img src="{{ asset('storage/'.$job->logo) }}" alt="Logo" style="max-width:60px;max-height:60px;"></div>
+                    @endif
+                    <div class="mb-2">
+                        <h5 class="fw-bold mb-2">{{ $job->title }}</h5>
+                        <div class="mb-1"><i class="fas fa-building me-1"></i> {{ $job->company }}</div>
+                        <div class="mb-1"><i class="fas fa-map-marker-alt me-1"></i> {{ $job->location }}</div>
+                        <div class="mb-1"><i class="fas fa-calendar-alt me-1"></i> Deadline: {{ $job->deadline ? \Carbon\Carbon::parse($job->deadline)->format('d M Y') : '-' }}</div>
+                        <span class="badge {{ $job->status == 'open' ? 'bg-success' : 'bg-secondary' }}">{{ ucfirst($job->status) }}</span>
                     </div>
-                    <button class="btn btn-outline-primary">Lamar</button>
+                    <div class="d-flex justify-content-between align-items-center mt-3 gap-2">
+                        <a href="{{ route('jobs.show', $job->id) }}" class="btn btn-outline-primary btn-sm rounded-pill">Detail</a>
+                        <a href="{{ route('jobs.edit', $job->id) }}" class="btn btn-warning btn-sm rounded-pill">Edit</a>
+                        <form action="{{ route('jobs.destroy', $job->id) }}" method="POST" onsubmit="return confirm('Yakin hapus lowongan ini?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm rounded-pill">Hapus</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="card mb-3">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <h5 class="card-title">Perawat ICU</h5>
-                        <p class="text-muted small mb-2">RS Sejahtera Medika</p>
-                        <div class="d-flex gap-2 mb-2">
-                            <span class="badge bg-primary">Full-time</span>
-                            <span class="badge bg-success">Rp 8-12jt</span>
-                        </div>
-                        <p class="card-text">Membutuhkan perawat ICU berpengalaman minimal 2 tahun...</p>
-                    </div>
-                    <button class="btn btn-outline-primary">Lamar</button>
-                </div>
-            </div>
+        @empty
+        <div class="col-12 text-center text-muted py-5">
+            <i class="fas fa-briefcase fa-2x mb-3"></i><br>
+            Belum ada lowongan kerja.
         </div>
-
-        <div class="card mb-3">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <h5 class="card-title">Apoteker</h5>
-                        <p class="text-muted small mb-2">Klinik Sehat</p>
-                        <div class="d-flex gap-2 mb-2">
-                            <span class="badge bg-primary">Full-time</span>
-                            <span class="badge bg-success">Rp 7-10jt</span>
-                        </div>
-                        <p class="card-text">Dibutuhkan apoteker untuk mengelola apotek klinik...</p>
-                    </div>
-                    <button class="btn btn-outline-primary">Lamar</button>
-                </div>
-            </div>
-        </div>
+        @endforelse
     </div>
 </div>
 @endsection

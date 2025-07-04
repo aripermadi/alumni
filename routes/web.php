@@ -13,6 +13,7 @@ use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\JobsController;
 
 Route::get('/', function () {
     $upcomingEvents = Event::whereDate('event_date', '>=', now())
@@ -97,3 +98,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/forum/{id}', [ForumController::class, 'show'])->name('forum.show');
+
+Route::get('/jobs/all', [JobsController::class, 'all'])->name('jobs.all');
+
+Route::resource('jobs', JobsController::class)->middleware(['auth']);
+
+Route::get('/jobs/public/{id}', [JobsController::class, 'publicShow'])->name('jobs.public.show');

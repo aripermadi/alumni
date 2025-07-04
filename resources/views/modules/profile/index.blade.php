@@ -51,7 +51,10 @@
         <a href="{{ route('events.index') }}" class="btn btn-warning rounded-pill px-4 py-2 d-flex align-items-center fw-semibold shadow-sm" style="font-size:1.1rem; transition:all .2s;">
             <i class="fas fa-calendar-alt me-2"></i> Kelola Event
         </a>
-        <a href="{{ route('user.index') }}" class="btn btn-success rounded-pill px-4 py-2 d-flex align-items-center fw-semibold shadow-sm" style="font-size:1.1rem; transition:all .2s;">
+        <a href="{{ route('jobs.index') }}" class="btn btn-success rounded-pill px-4 py-2 d-flex align-items-center fw-semibold shadow-sm" style="font-size:1.1rem; transition:all .2s;">
+            <i class="fas fa-briefcase me-2"></i> Kelola Lowongan
+        </a>
+        <a href="{{ route('user.index') }}" class="btn btn-primary rounded-pill px-4 py-2 d-flex align-items-center fw-semibold shadow-sm" style="font-size:1.1rem; transition:all .2s;">
             <i class="fas fa-users-cog me-2"></i> Kelola User
         </a>
     </div>
