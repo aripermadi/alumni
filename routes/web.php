@@ -63,8 +63,13 @@ Route::post('/logout', function (Request $request) {
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 
+Route::get('/events/ajax-all', [App\Http\Controllers\EventController::class, 'ajaxAll'])->name('events.ajax-all');
 Route::get('/events/all', [EventController::class, 'all'])->name('events.all');
+Route::get('/events/public/{id}', [EventController::class, 'publicShow'])->name('events.public.show');
+
+Route::get('/news/ajax-all', [App\Http\Controllers\NewsController::class, 'ajaxAll'])->name('news.ajax-all');
 Route::get('/news/all', [NewsController::class, 'all'])->name('news.all');
+Route::get('/news/public/{id}', [NewsController::class, 'publicShow'])->name('news.public.show');
 
 Route::resource('news', NewsController::class)->middleware('auth');
 Route::resource('events', EventController::class)->middleware('auth');
@@ -72,9 +77,7 @@ Route::resource('events', EventController::class)->middleware('auth');
 Route::get('news/{news}', [NewsController::class, 'show'])->name('news.show')->middleware('auth');
 Route::get('events/{event}', [EventController::class, 'show'])->name('events.show')->middleware('auth');
 
-Route::get('/events/public/{id}', [EventController::class, 'publicShow'])->name('events.public.show');
-Route::get('/news/public/{id}', [NewsController::class, 'publicShow'])->name('news.public.show');
-
+Route::get('/alumni/ajax-angkatan', [App\Http\Controllers\AlumniController::class, 'ajaxAngkatan'])->name('alumni.ajax-angkatan');
 Route::get('/alumni', [AlumniController::class, 'index'])->name('alumni.index');
 Route::get('/alumni/{id}', [AlumniController::class, 'show'])->name('alumni.show');
 

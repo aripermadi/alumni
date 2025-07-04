@@ -16,7 +16,7 @@ class AlumniController extends Controller
                 $q->where('name', 'like', '%' . $request->q . '%');
             });
         }
-        $alumni = $query->orderByDesc('id')->paginate(12);
+        $alumni = $query->orderBy('angkatan')->get()->groupBy('angkatan');
         return view('modules.alumni.index', compact('alumni'));
     }
 
@@ -25,5 +25,19 @@ class AlumniController extends Controller
     {
         $alumni = Alumni::with('user')->findOrFail($id);
         return view('modules.alumni.show', compact('alumni'));
+    }
+
+    public function ajaxAngkatan(Request $request)
+    {
+        $page = $request->get('page', 1);
+        $angkatanList = Alumni::select('angkatan')->distinct()->orderBy('angkatan')->pluck('angkatan')->values();
+        $angkatan = $angkatanList[$page - 1] ?? null;
+        $alumni = $angkatan ? Alumni::with('user')->where('angkatan', $angkatan)->get() : collect();
+        $html = view('modules.alumni._alumni_grid', compact('alumni', 'angkatan'))->render();
+        return response()->json([
+            'angkatan' => $angkatan,
+            'alumni' => $html,
+            'hasMore' => $page < count($angkatanList)
+        ]);
     }
 } 

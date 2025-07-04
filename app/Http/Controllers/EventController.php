@@ -152,4 +152,20 @@ class EventController extends Controller
         $event = Event::findOrFail($id);
         return view('modules.events.public_show', compact('event'));
     }
+
+    public function ajaxAll(Request $request)
+    {
+        $page = $request->get('page', 1);
+        $perPage = 6;
+        $query = Event::orderByDesc('event_date');
+        if ($request->has('q') && $request->q) {
+            $query->where('title', 'like', '%' . $request->q . '%');
+        }
+        $events = $query->paginate($perPage, ['*'], 'page', $page);
+        $html = view('modules.events._events_grid', ['events' => $events])->render();
+        return response()->json([
+            'events' => $html,
+            'hasMore' => $events->hasMorePages()
+        ]);
+    }
 }

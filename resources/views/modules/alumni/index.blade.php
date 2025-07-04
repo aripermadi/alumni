@@ -12,29 +12,8 @@
             <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i> Cari</button>
         </div>
     </form>
-    <div class="row g-4">
-        @forelse($alumni as $item)
-            <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card h-100 shadow-sm border-0 alumni-card">
-                    <div class="d-flex justify-content-center align-items-center pt-4" style="min-height:100px;">
-                        <img src="{{ $item->foto ? asset('storage/'.$item->foto) : 'https://ui-avatars.com/api/?name='.urlencode($item->user->name) }}" class="rounded-circle mb-2" alt="Foto Alumni" style="width:80px; height:80px; object-fit:cover; border:4px solid #e9ecef;">
-                    </div>
-                    <div class="card-body d-flex flex-column align-items-center">
-                        <h5 class="card-title mb-1">{{ $item->user->name }}</h5>
-                        <div class="text-muted small mb-2">Angkatan: {{ $item->angkatan ?? '-' }}</div>
-                        <div class="mb-2">Jurusan: <span class="fw-semibold">{{ $item->jurusan ?? '-' }}</span></div>
-                        <div class="mb-2"><i class="fas fa-briefcase me-1"></i> {{ $item->pekerjaan ?? '-' }}</div>
-                        <a href="{{ route('alumni.show', $item->id) }}" class="btn btn-info btn-sm w-100 mt-auto"><i class="fas fa-user"></i> Detail</a>
-                    </div>
-                </div>
-            </div>
-        @empty
-            <div class="col-12 text-center text-muted">Belum ada data alumni.</div>
-        @endforelse
-    </div>
-    <div class="mt-4 d-flex justify-content-center">
-        {{ $alumni->withQueryString()->links() }}
-    </div>
+    <div id="alumni-list"></div>
+    <button id="load-more" class="btn btn-primary mt-4">Load More</button>
 </div>
 @endsection
 
@@ -55,4 +34,25 @@
     min-height: 120px;
 }
 </style>
+@endpush
+
+@push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+let page = 1;
+function loadAngkatan() {
+    $('#load-more').prop('disabled', true).text('Loading...');
+    $.get("{{ route('alumni.ajax-angkatan') }}", {page}, function(res) {
+        if(res.alumni) $('#alumni-list').append(res.alumni);
+        if(res.hasMore) {
+            $('#load-more').prop('disabled', false).text('Lihat Angkatan Lainnya');
+            page++;
+        } else {
+            $('#load-more').hide();
+        }
+    });
+}
+$('#load-more').on('click', loadAngkatan);
+$(document).ready(loadAngkatan);
+</script>
 @endpush 

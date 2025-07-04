@@ -11,29 +11,8 @@
             <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i> Cari</button>
         </div>
     </form>
-    <div class="row g-4">
-        @forelse($events as $item)
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 shadow-sm border-0 event-card">
-                    @if($item->image)
-                        <img src="{{ asset('storage/'.$item->image) }}" class="card-img-top" alt="Gambar Event" style="height:180px; object-fit:cover;">
-                    @endif
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title mb-1">{{ $item->title }}</h5>
-                        <div class="mb-2 text-muted small">
-                            <i class="fas fa-calendar-alt me-1"></i> {{ $item->event_date ? \Carbon\Carbon::parse($item->event_date)->format('d-m-Y') : '-' }}<br>
-                            <i class="fas fa-map-marker-alt me-1"></i> {{ $item->location }}
-                        </div>
-                        <div class="mt-auto">
-                            <a href="{{ route('events.public.show', $item->id) }}" class="btn btn-sm btn-info w-100"><i class="fas fa-eye"></i> Detail</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @empty
-            <div class="col-12 text-center text-muted">Belum ada event.</div>
-        @endforelse
-    </div>
+    <div class="row g-4" id="events-list"></div>
+    <button id="load-more" class="btn btn-primary mt-4">Load More</button>
 </div>
 @endsection
 
@@ -70,4 +49,25 @@
     border-radius: 0 1rem 1rem 0;
 }
 </style>
+@endpush
+
+@push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+let page = 1;
+function loadEvents() {
+    $('#load-more').prop('disabled', true).text('Loading...');
+    $.get("{{ route('events.ajax-all') }}", {page, q: '{{ request('q') }}'}, function(res) {
+        if(res.events) $('#events-list').append(res.events);
+        if(res.hasMore) {
+            $('#load-more').prop('disabled', false).text('Load More');
+            page++;
+        } else {
+            $('#load-more').hide();
+        }
+    });
+}
+$('#load-more').on('click', loadEvents);
+$(document).ready(loadEvents);
+</script>
 @endpush 

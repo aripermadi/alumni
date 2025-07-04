@@ -146,4 +146,20 @@ class NewsController extends Controller
         $news = News::findOrFail($id);
         return view('modules.news.public_show', compact('news'));
     }
+
+    public function ajaxAll(Request $request)
+    {
+        $page = $request->get('page', 1);
+        $perPage = 6;
+        $query = News::orderByDesc('published_at');
+        if ($request->has('q') && $request->q) {
+            $query->where('title', 'like', '%' . $request->q . '%');
+        }
+        $news = $query->paginate($perPage, ['*'], 'page', $page);
+        $html = view('modules.news._news_grid', ['news' => $news])->render();
+        return response()->json([
+            'news' => $html,
+            'hasMore' => $news->hasMorePages()
+        ]);
+    }
 }
