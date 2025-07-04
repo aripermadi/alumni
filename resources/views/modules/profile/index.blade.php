@@ -9,7 +9,7 @@
                     <form action="{{ route('profile.update-picture') }}" method="POST" enctype="multipart/form-data" id="form-foto">
                         @csrf
                         <label for="foto" style="cursor:pointer;">
-                            <img src="{{ Auth::user()->alumni && Auth::user()->alumni->foto ? asset('storage/' . Auth::user()->alumni->foto) : 'https://via.placeholder.com/100' }}" class="rounded-circle mb-3" alt="Profile Picture" style="width:100px;height:100px;object-fit:cover;border:3px solid #fff;box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+                            <img src="{{ Auth::user()->alumni && Auth::user()->alumni->foto ? asset('storage/' . Auth::user()->alumni->foto) : asset('images/placeholder-profile.png') }}" class="rounded-circle mb-3" alt="Profile Picture" style="width:100px;height:100px;object-fit:cover;border:3px solid #fff;box-shadow:0 2px 5px rgba(0,0,0,0.1);">
                             <input type="file" name="foto" id="foto" accept="image/*" class="d-none" onchange="document.getElementById('form-foto').submit()">
                         </label>
                     </form>

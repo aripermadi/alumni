@@ -16,7 +16,7 @@
         @forelse($alumni as $item)
             <div class="col-md-6 col-lg-4 col-xl-3">
                 <div class="card h-100 shadow-sm border-0 alumni-card">
-                    <div class="text-center pt-4">
+                    <div class="d-flex justify-content-center align-items-center pt-4" style="min-height:100px;">
                         <img src="{{ $item->foto ? asset('storage/'.$item->foto) : 'https://ui-avatars.com/api/?name='.urlencode($item->user->name) }}" class="rounded-circle mb-2" alt="Foto Alumni" style="width:80px; height:80px; object-fit:cover; border:4px solid #e9ecef;">
                     </div>
                     <div class="card-body d-flex flex-column align-items-center">
@@ -50,6 +50,9 @@
 }
 .card-title {
     font-weight: 600;
+}
+.alumni-card .d-flex.justify-content-center.align-items-center {
+    min-height: 120px;
 }
 </style>
 @endpush 
