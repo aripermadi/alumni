@@ -115,6 +115,7 @@
                         </div>
                         <div class="event-details" style="display:inline-block; margin-left:15px; vertical-align:top;">
                             <h6 class="mb-1">{{ $event->title }}</h6>
+                            <div class="countdown-event text-primary small mb-1" data-date="{{ $event->event_date }}" id="countdown-event-{{ $event->id }}"></div>
                             <p class="text-muted small mb-0">
                                 <i class="fas fa-map-marker-alt me-2"></i>
                                 {{ $event->location }}
@@ -315,4 +316,27 @@
         transform: translateY(-2px) scale(1.04);
     }
 </style>
+@endpush
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.countdown-event').forEach(function(el) {
+        var dateStr = el.getAttribute('data-date');
+        var target = new Date(dateStr);
+        function updateCountdown() {
+            var now = new Date();
+            var diff = target - now;
+            if (diff > 0) {
+                var days = Math.ceil(diff / (1000*60*60*24));
+                el.textContent = days + ' Hari Lagi';
+            } else {
+                el.textContent = 'Sedang berlangsung atau sudah lewat';
+            }
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000*60*60); // update tiap jam
+    });
+});
+</script>
 @endpush 
