@@ -1,13 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="hero-section mb-5">
-    <div class="hero-overlay">
-        <div class="container text-center text-white d-flex flex-column justify-content-center align-items-center h-100">
-            <h1 class="display-4 fw-bold mb-3">Selamat Datang di Alumni FK UNISMA</h1>
-            <p class="lead mb-4">Bangun koneksi, dapatkan informasi, dan berkembang bersama komunitas alumni terbaik.</p>
-            <a href="/network" class="btn btn-primary btn-lg shadow">Gabung Jaringan Alumni</a>
+<div class="hero-section mb-5 position-relative" style="overflow:hidden;">
+    <div class="hero-gradient position-absolute w-100 h-100" style="z-index:1;"></div>
+    <div class="container text-center text-white d-flex flex-column justify-content-center align-items-center h-100 position-relative" style="z-index:2; min-height:340px;">
+        <div class="mb-3">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Alumni Icon" style="width:90px; height:90px; background:rgba(255,255,255,0.15); border-radius:50%; box-shadow:0 4px 24px rgba(13,110,253,0.13);">
         </div>
+        <h1 class="display-3 fw-bold mb-2" style="letter-spacing:1px; text-shadow:0 2px 16px rgba(0,0,0,0.13);">Selamat Datang di <span style="color:#ffe066;">Alumni FK UNISMA</span></h1>
+        <p class="lead mb-4" style="font-size:1.35rem; max-width:600px; margin:auto; text-shadow:0 1px 8px rgba(0,0,0,0.10);">Bangun koneksi, dapatkan informasi, dan berkembang bersama komunitas alumni terbaik.</p>
+        <a href="/network" class="btn btn-lg px-5 py-3 fw-semibold shadow join-btn">Gabung Jaringan Alumni</a>
     </div>
 </div>
 <div class="container">
@@ -164,26 +166,27 @@
         right: 50%;
         margin-left: -50vw;
         margin-right: -50vw;
-        min-height: 320px;
-        background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+        min-height: 340px;
+        background: none;
         display: flex;
         align-items: center;
+        justify-content: center;
+        overflow: hidden;
     }
-    .hero-overlay {
-        width: 100%;
-        min-height: 320px;
-        background: rgba(13, 110, 253, 0.7);
-        display: flex;
-        align-items: center;
+    .hero-gradient {
+        background: linear-gradient(120deg, #0d6efd 60%, #3a8dde 100%);
+        opacity: 0.93;
+        top: 0; left: 0; right: 0; bottom: 0;
+        position: absolute;
     }
     @media (max-width: 768px) {
-        .hero-section, .hero-overlay {
-            min-height: 200px;
+        .hero-section, .hero-gradient {
+            min-height: 220px;
             height: 100%;
             padding: 30px 0;
         }
-        .hero-section h1 {
-            font-size: 2rem;
+        .hero-section h1, .display-3 {
+            font-size: 2rem !important;
         }
     }
     .welcome-card {
@@ -296,6 +299,20 @@
     }
     .d-flex.d-md-none.flex-row.overflow-auto::-webkit-scrollbar {
         display: none; /* Chrome/Safari/Webkit */
+    }
+    .join-btn {
+        background: linear-gradient(90deg, #ffe066 0%, #0d6efd 100%);
+        color: #212529;
+        border: none;
+        border-radius: 2rem;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 24px rgba(13,110,253,0.13);
+        transition: background 0.3s, color 0.3s, transform 0.2s;
+    }
+    .join-btn:hover {
+        background: linear-gradient(90deg, #0d6efd 0%, #ffe066 100%);
+        color: #fff;
+        transform: translateY(-2px) scale(1.04);
     }
 </style>
 @endpush 
