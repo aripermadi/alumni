@@ -12,6 +12,14 @@
                 <div class="mb-2"><span class="fw-semibold">Jurusan</span> : {{ $alumni->jurusan ?? '-' }}</div>
                 <div class="mb-2"><span class="fw-semibold">Pekerjaan</span> : {{ $alumni->pekerjaan ?? '-' }}</div>
                 <div class="mb-2"><span class="fw-semibold">Alamat</span> : {{ $alumni->alamat ?? '-' }}</div>
+                @if($alumni->locations->last())
+                    <div class="mb-2">
+                        <span class="fw-semibold">Koordinat Lokasi</span> :
+                        <a href="https://maps.google.com/?q={{ $alumni->locations->last()->latitude }},{{ $alumni->locations->last()->longitude }}" target="_blank">
+                            {{ $alumni->locations->last()->latitude }}, {{ $alumni->locations->last()->longitude }}
+                        </a>
+                    </div>
+                @endif
                 <div class="mb-2"><span class="fw-semibold">No. HP</span> : {{ $alumni->no_hp ?? '-' }}</div>
                 <a href="{{ route('alumni.index') }}" class="btn btn-secondary mt-4"><i class="fas fa-arrow-left"></i> Kembali</a>
             </div>

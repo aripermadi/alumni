@@ -82,6 +82,8 @@
                                 @enderror
                             </div>
                         </div>
+                        <input type="hidden" name="latitude" id="latitude" value="{{ old('latitude', $alumni->locations->last()->latitude ?? '') }}">
+                        <input type="hidden" name="longitude" id="longitude" value="{{ old('longitude', $alumni->locations->last()->longitude ?? '') }}">
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="{{ route('profile.index') }}" class="btn btn-outline-secondary rounded-pill px-4 py-2">
                                 <i class="fas fa-arrow-left me-1"></i> Batal
@@ -126,6 +128,8 @@ document.addEventListener('DOMContentLoaded', function() {
         marker = L.marker(latlng).addTo(map);
         map.setView(latlng, 16);
         alamatInput.value = e.geocode.name;
+        document.getElementById('latitude').value = latlng.lat;
+        document.getElementById('longitude').value = latlng.lng;
     })
     .addTo(map);
 
@@ -137,6 +141,8 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(res => res.json())
             .then(data => {
                 alamatInput.value = data.display_name || `${e.latlng.lat},${e.latlng.lng}`;
+                document.getElementById('latitude').value = e.latlng.lat;
+                document.getElementById('longitude').value = e.latlng.lng;
             });
     });
 
@@ -154,6 +160,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     .then(res => res.json())
                     .then(data => {
                         alamatInput.value = data.display_name || `${lat},${lng}`;
+                        document.getElementById('latitude').value = lat;
+                        document.getElementById('longitude').value = lng;
                     });
             }, function() {
                 alert('Gagal mengambil lokasi. Pastikan izin lokasi diaktifkan.');

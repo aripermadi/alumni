@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Intervention\Image\Facades\Image;
+use App\Models\AlumniLocation;
 
 class ProfileController extends Controller
 {
@@ -47,6 +48,15 @@ class ProfileController extends Controller
             $alumni->no_hp = $request->no_hp;
             // $alumni->foto = ... // handle upload jika ada
             $alumni->save();
+            if ($request->latitude && $request->longitude) {
+                AlumniLocation::updateOrCreate(
+                    ['alumni_id' => $alumni->id],
+                    [
+                        'latitude' => $request->latitude,
+                        'longitude' => $request->longitude,
+                    ]
+                );
+            }
         }
         return redirect()->route('profile.index')->with('success', 'Profil berhasil diupdate.');
     }

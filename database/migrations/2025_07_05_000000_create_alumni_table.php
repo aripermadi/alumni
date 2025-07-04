@@ -31,4 +31,7 @@ return new class extends Migration
     {
         Schema::dropIfExists('alumni');
     }
-}; 
+};
+
+// Migration baru untuk lokasi alumni
+define('MIGRATION_ALUMNI_LOCATION', true); 
