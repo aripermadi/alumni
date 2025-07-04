@@ -49,7 +49,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="image" class="form-label">Gambar (opsional)</label>
-                            <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror" accept="image/*" capture="environment">
+                            <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
                             @error('image')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
