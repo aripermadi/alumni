@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3 class="fw-bold">Data Alumni</h3>
-    </div>
+<div class="container mt-4">
+    
     <form method="GET" action="{{ route('alumni.index') }}" class="mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="fw-bold text-center">Data Alumni</h3>
+        </div>
         <div class="input-group">
             <input type="text" name="q" class="form-control" placeholder="Cari nama alumni..." value="{{ request('q') }}">
             <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i> Cari</button>

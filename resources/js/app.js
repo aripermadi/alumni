@@ -22,8 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     content.classList.remove('fade-in');
                     content.classList.add('fade-out');
                     setTimeout(() => {
+                        content.style.display = 'none';
                         window.location = link.href;
-                    }, 750); // waktu fade-out
+                    }, 350); // waktu fade-out dipercepat
                 } else {
                     window.location = link.href;
                 }

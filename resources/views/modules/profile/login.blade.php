@@ -124,7 +124,7 @@
 <div class="container min-vh-100 d-flex align-items-center justify-content-center" style="padding-top:40px; padding-bottom:40px;">
     <div class="row w-100 justify-content-center">
         <div class="col-md-6 col-lg-5 auth-card-wrapper">
-            <img src="https://undraw.co/api/illustrations/0f8b7e7e-2e3e-4e2e-8e2e-0e2e0e2e0e2e" alt="Auth Ilustrasi" class="auth-illustration d-none d-lg-block">
+            {{-- <img src="https://undraw.co/api/illustrations/0f8b7e7e-2e3e-4e2e-8e2e-0e2e0e2e0e2e" alt="Auth Ilustrasi" class="auth-illustration d-none d-lg-block"> --}}
             <div class="card auth-card w-100">
                 <div class="auth-card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Logo_UNISMA.png" alt="Logo UNISMA" class="auth-logo">
