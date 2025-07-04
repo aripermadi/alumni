@@ -6,6 +6,7 @@ use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class NewsController extends Controller
 {
@@ -35,11 +36,22 @@ class NewsController extends Controller
             'title' => 'required',
             'content' => 'required',
             'published_at' => 'nullable|date',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:5120',
+            'category_id' => 'nullable|exists:categories,id',
         ]);
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('news', 'public');
+            $file = $request->file('image');
+            $category = $request->category_id ?? 'uncategorized';
+            $folder = 'news/' . $category;
+            if ($file->getSize() > 2048 * 1024) {
+                $img = Image::make($file)->resize(800, 600, function ($c) { $c->aspectRatio(); $c->upsize(); })->encode('jpg', 80);
+                $filename = $folder . '/' . uniqid() . '.jpg';
+                \Storage::disk('public')->put($filename, $img);
+                $imagePath = $filename;
+            } else {
+                $imagePath = $file->store($folder, 'public');
+            }
         }
         News::create([
             'title' => $request->title,
@@ -76,7 +88,8 @@ class NewsController extends Controller
             'title' => 'required',
             'content' => 'required',
             'published_at' => 'nullable|date',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:5120',
+            'category_id' => 'nullable|exists:categories,id',
         ]);
         $data = [
             'title' => $request->title,
@@ -85,9 +98,19 @@ class NewsController extends Controller
         ];
         if ($request->hasFile('image')) {
             if ($news->image) {
-                Storage::disk('public')->delete($news->image);
+                \Storage::disk('public')->delete($news->image);
             }
-            $data['image'] = $request->file('image')->store('news', 'public');
+            $file = $request->file('image');
+            $category = $request->category_id ?? ($news->category_id ?? 'uncategorized');
+            $folder = 'news/' . $category;
+            if ($file->getSize() > 2048 * 1024) {
+                $img = Image::make($file)->resize(800, 600, function ($c) { $c->aspectRatio(); $c->upsize(); })->encode('jpg', 80);
+                $filename = $folder . '/' . uniqid() . '.jpg';
+                \Storage::disk('public')->put($filename, $img);
+                $data['image'] = $filename;
+            } else {
+                $data['image'] = $file->store($folder, 'public');
+            }
         }
         $news->update($data);
         return redirect()->route('news.index')->with('success', 'Berita berhasil diupdate.');

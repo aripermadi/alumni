@@ -6,6 +6,7 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class EventController extends Controller
 {
@@ -40,11 +41,21 @@ class EventController extends Controller
             'description' => 'required',
             'event_date' => 'required|date',
             'location' => 'required',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:5120',
         ]);
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('events', 'public');
+            $file = $request->file('image');
+            $category = $request->category_id ?? 'uncategorized';
+            $folder = 'events/' . $category;
+            if ($file->getSize() > 2048 * 1024) {
+                $img = Image::make($file)->resize(800, 600, function ($c) { $c->aspectRatio(); $c->upsize(); })->encode('jpg', 80);
+                $filename = $folder . '/' . uniqid() . '.jpg';
+                \Storage::disk('public')->put($filename, $img);
+                $imagePath = $filename;
+            } else {
+                $imagePath = $file->store($folder, 'public');
+            }
         }
         Event::create([
             'title' => $request->title,
@@ -83,7 +94,7 @@ class EventController extends Controller
             'description' => 'required',
             'event_date' => 'required|date',
             'location' => 'required',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:5120',
         ]);
         $data = [
             'title' => $request->title,
@@ -93,9 +104,19 @@ class EventController extends Controller
         ];
         if ($request->hasFile('image')) {
             if ($event->image) {
-                Storage::disk('public')->delete($event->image);
+                \Storage::disk('public')->delete($event->image);
             }
-            $data['image'] = $request->file('image')->store('events', 'public');
+            $file = $request->file('image');
+            $category = $request->category_id ?? ($event->category_id ?? 'uncategorized');
+            $folder = 'events/' . $category;
+            if ($file->getSize() > 2048 * 1024) {
+                $img = Image::make($file)->resize(800, 600, function ($c) { $c->aspectRatio(); $c->upsize(); })->encode('jpg', 80);
+                $filename = $folder . '/' . uniqid() . '.jpg';
+                \Storage::disk('public')->put($filename, $img);
+                $data['image'] = $filename;
+            } else {
+                $data['image'] = $file->store($folder, 'public');
+            }
         }
         $event->update($data);
         return redirect()->route('events.index')->with('success', 'Event berhasil diupdate.');

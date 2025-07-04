@@ -79,16 +79,18 @@ class ProfileController extends Controller
                 \Storage::disk('public')->delete($alumni->foto);
             }
             $file = $request->file('foto');
+            $angkatan = $alumni->angkatan ?? 'uncategorized';
+            $folder = 'alumni/' . $angkatan;
             if ($file->getSize() > 2048 * 1024) {
                 $img = Image::make($file)->resize(600, 600, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 })->encode('jpg', 80); // kompres kualitas 80%
-                $filename = 'alumni/' . uniqid() . '.jpg';
+                $filename = $folder . '/' . uniqid() . '.jpg';
                 \Storage::disk('public')->put($filename, $img);
                 $alumni->foto = $filename;
             } else {
-                $path = $file->store('alumni', 'public');
+                $path = $file->store($folder, 'public');
                 $alumni->foto = $path;
             }
             $alumni->save();
