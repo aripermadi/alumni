@@ -26,7 +26,7 @@
         @else
             <a href="/login" class="col nav-item {{ in_array($active, ['profile','login','register']) ? 'active' : '' }} text-decoration-none">
                 <i class="fas fa-sign-in-alt"></i>
-                <span>Login / Registrasi</span>
+                <span>Login</span>
             </a>
         @endauth
     </div>

@@ -46,7 +46,7 @@
                 @else
                     <li class="nav-item">
                         <a class="nav-link px-3 {{ in_array($active, ['profile','login','register']) ? 'active' : '' }}" href="/login">
-                            <i class="fas fa-sign-in-alt me-1"></i> Login / Registrasi
+                            <i class="fas fa-sign-in-alt me-1"></i> Login
                         </a>
                     </li>
                 @endauth
