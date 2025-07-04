@@ -32,18 +32,18 @@
                     <div class="col-md-6">
                         <p class="mb-2"><strong>Nama Lengkap:</strong> @auth{{ Auth::user()->name }}@endauth</p>
                         <p class="mb-2"><strong>Email:</strong> @auth{{ Auth::user()->email }}@endauth</p>
-                        <p class="mb-2"><strong>No. Telepon:</strong> -</p>
+                        <p class="mb-2"><strong>No. Telepon:</strong> {{ Auth::user()->alumni ? Auth::user()->alumni->no_hp : '-' }}</p>
                     </div>
                     <div class="col-md-6">
-                        <p class="mb-2"><strong>Alamat:</strong> -</p>
-                        <p class="mb-2"><strong>Pekerjaan:</strong> -</p>
+                        <p class="mb-2"><strong>Alamat:</strong> {{ Auth::user()->alumni ? Auth::user()->alumni->alamat : '-' }}</p>
+                        <p class="mb-2"><strong>Pekerjaan:</strong> {{ Auth::user()->alumni ? Auth::user()->alumni->pekerjaan : '-' }}</p>
                         <p class="mb-2"><strong>Instansi:</strong> -</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="card mb-4">
+        {{-- <div class="card mb-4">
             <div class="card-body">
                 <h5 class="card-title mb-3">Pendidikan</h5>
                 <div class="timeline">
@@ -73,7 +73,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 
     @auth
