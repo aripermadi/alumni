@@ -6,8 +6,11 @@
         <div class="card">
             <div class="card-body text-center">
                 <img src="https://via.placeholder.com/100" class="rounded-circle mb-3" alt="Profile Picture">
-                <h4 class="card-title mb-1">Dr. Ahmad Hidayat</h4>
-                <p class="text-muted mb-3">Dokter Umum - RS Medika Sejahtera</p>
+                <h4 class="card-title mb-1">Selamat Datang,</h4>
+                @auth
+                    <h4 class="card-title mb-1">{{ Auth::user()->name }}</h4>
+                @endauth
+                <p class="text-muted mb-3">Alumni Kedokteran UNISMA</p>
                 <div class="d-flex justify-content-center gap-2">
                     <button class="btn btn-primary">Edit Profil</button>
                     <button class="btn btn-outline-primary">Bagikan Profil</button>
@@ -22,14 +25,14 @@
                 <h5 class="card-title mb-3">Informasi Pribadi</h5>
                 <div class="row">
                     <div class="col-md-6">
-                        <p class="mb-2"><strong>Nama Lengkap:</strong> Dr. Ahmad Hidayat</p>
-                        <p class="mb-2"><strong>Email:</strong> ahmad.hidayat@email.com</p>
-                        <p class="mb-2"><strong>No. Telepon:</strong> 081234567890</p>
+                        <p class="mb-2"><strong>Nama Lengkap:</strong> @auth{{ Auth::user()->name }}@endauth</p>
+                        <p class="mb-2"><strong>Email:</strong> @auth{{ Auth::user()->email }}@endauth</p>
+                        <p class="mb-2"><strong>No. Telepon:</strong> -</p>
                     </div>
                     <div class="col-md-6">
-                        <p class="mb-2"><strong>Alamat:</strong> Jl. Sejahtera No. 123, Malang</p>
-                        <p class="mb-2"><strong>Pekerjaan:</strong> Dokter Umum</p>
-                        <p class="mb-2"><strong>Instansi:</strong> RS Medika Sejahtera</p>
+                        <p class="mb-2"><strong>Alamat:</strong> -</p>
+                        <p class="mb-2"><strong>Pekerjaan:</strong> -</p>
+                        <p class="mb-2"><strong>Instansi:</strong> -</p>
                     </div>
                 </div>
             </div>
@@ -67,6 +70,15 @@
             </div>
         </div>
     </div>
+
+    @auth
+    <div class="d-flex justify-content-center mt-3">
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn btn-danger"><i class="fas fa-sign-out-alt me-1"></i> Logout</button>
+        </form>
+    </div>
+    @endauth
 </div>
 @endsection
 

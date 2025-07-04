@@ -28,23 +28,25 @@
                     </a>
                 </li>
                 @auth
-                    <li class="nav-item">
-                        <a class="nav-link px-3 {{ $active === 'profile' ? 'active' : '' }}" href="/profile">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link px-3 dropdown-toggle {{ $active === 'profile' || $active === 'home' ? 'active' : '' }}" href="/profile" id="navbarProfileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user me-1"></i> Profil
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <form method="POST" action="{{ route('logout') }}" class="d-inline">
-                            @csrf
-                            <button type="submit" class="nav-link btn btn-link px-3" style="display:inline; color:#dc3545;">
-                                <i class="fas fa-sign-out-alt me-1"></i> Logout
-                            </button>
-                        </form>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarProfileDropdown">
+                            <li><a class="dropdown-item" href="/profile"><i class="fas fa-user me-1"></i> Lihat Profil</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt me-1"></i> Logout</button>
+                                </form>
+                            </li>
+                        </ul>
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="nav-link px-3 {{ $active === 'profile' ? 'active' : '' }}" href="/login">
-                            <i class="fas fa-sign-in-alt me-1"></i> Login
+                        <a class="nav-link px-3 {{ in_array($active, ['profile','login','register']) ? 'active' : '' }}" href="/login">
+                            <i class="fas fa-sign-in-alt me-1"></i> Login / Registrasi
                         </a>
                     </li>
                 @endauth

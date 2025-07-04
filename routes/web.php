@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Profile\RegisterController;
+use App\Http\Controllers\Profile\LoginController;
 
 Route::get('/', function () {
     return view('modules.home.index', ['active' => 'home']);
@@ -26,22 +28,10 @@ Route::get('/news', function () {
 
 Route::get('/profile', function () {
     return view('modules.profile.index', ['active' => 'profile']);
-});
+})->middleware('auth');
 
-Route::get('/login', function () {
-    return view('modules.profile.login');
-})->name('login')->middleware('guest');
-
-Route::post('/login', function (Request $request) {
-    $credentials = $request->only('email', 'password');
-    if (Auth::attempt($credentials)) {
-        $request->session()->regenerate();
-        return redirect()->intended('/profile');
-    }
-    return back()->withErrors([
-        'email' => 'Email atau password salah.',
-    ])->withInput();
-})->middleware('guest');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest');
+Route::post('/login', [LoginController::class, 'login'])->middleware('guest');
 
 Route::post('/logout', function (Request $request) {
     Auth::logout();
@@ -49,3 +39,6 @@ Route::post('/logout', function (Request $request) {
     $request->session()->regenerateToken();
     return redirect('/');
 })->name('logout')->middleware('auth');
+
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);

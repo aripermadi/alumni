@@ -13,7 +13,11 @@
 <div class="container">
     <div class="welcome-section mb-4">
         <h4 class="mb-1">Selamat Datang,</h4>
-        <p class="text-muted mb-0">Alumni Kedokteran UNISMA</p>
+        @auth
+            <h5 class="mb-0">{{ Auth::user()->name }}</h5>
+        @else
+            <p class="text-muted mb-0">Alumni Kedokteran UNISMA</p>
+        @endauth
     </div>
 
     <div class="quick-actions mb-4">
