@@ -75,4 +75,23 @@ class ForumController extends Controller
         ]);
         return redirect()->route('forum.show', $id)->with('success', 'Balasan berhasil ditambahkan.');
     }
+
+    public function updateReply(Request $request, $forumId, $replyId)
+    {
+        $reply = ForumReply::findOrFail($replyId);
+        if ($reply->user_id !== Auth::id()) {
+            abort(403);
+        }
+        $request->validate([
+            'isi' => 'required|string',
+            'image' => 'nullable|image|max:2048',
+        ]);
+        $reply->isi = $request->isi;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('forum_replies', 'public');
+            $reply->image = $imagePath;
+        }
+        $reply->save();
+        return redirect()->route('forum.show', $forumId)->with('success', 'Balasan berhasil diupdate.');
+    }
 } 

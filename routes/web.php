@@ -95,6 +95,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/forum/create', [ForumController::class, 'create'])->name('forum.create');
     Route::post('/forum', [ForumController::class, 'store'])->name('forum.store');
     Route::post('/forum/{id}/reply', [ForumController::class, 'reply'])->name('forum.reply');
+    Route::put('/forum/{forum}/reply/{reply}', [App\Http\Controllers\ForumController::class, 'updateReply'])->name('forum.reply.update');
 });
 
 Route::get('/forum/{id}', [ForumController::class, 'show'])->name('forum.show');

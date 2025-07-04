@@ -28,11 +28,34 @@
                             <div class="d-flex align-items-center mb-1">
                                 <span class="fw-semibold">{{ $reply->user->name }}</span>
                                 <span class="text-muted small ms-2">{{ $reply->created_at->diffForHumans() }}</span>
+                                @auth
+                                    @if(auth()->id() === $reply->user_id)
+                                        <button type="button" class="btn btn-sm btn-link ms-2 p-0" onclick="showEditForm({{ $reply->id }})">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                    @endif
+                                @endauth
                             </div>
                             @if($reply->image)
                                 <img src="{{ asset('storage/'.$reply->image) }}" class="rounded mb-2" style="max-width:180px;max-height:120px;object-fit:cover;">
                             @endif
-                            <div>{!! nl2br(e($reply->isi)) !!}</div>
+                            <div id="reply-content-{{ $reply->id }}">{!! nl2br(e($reply->isi)) !!}</div>
+                            @auth
+                                @if(auth()->id() === $reply->user_id)
+                                    <form id="edit-form-{{ $reply->id }}" action="{{ route('forum.reply.update', [$forum->id, $reply->id]) }}" method="POST" class="mb-2" style="display:none;" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="mb-2">
+                                            <textarea name="isi" class="form-control" rows="3" required>{{ $reply->isi }}</textarea>
+                                        </div>
+                                        <div class="mb-2">
+                                            <input type="file" name="image" class="form-control" accept="image/*">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
+                                        <button type="button" class="btn btn-secondary btn-sm" onclick="hideEditForm({{ $reply->id }})">Batal</button>
+                                    </form>
+                                @endif
+                            @endauth
                         </div>
                     @empty
                         <div class="text-muted">Belum ada balasan.</div>
@@ -71,4 +94,17 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection
+
+@push('scripts')
+<script>
+    function showEditForm(id) {
+        document.getElementById('edit-form-' + id).style.display = 'block';
+        document.getElementById('reply-content-' + id).style.display = 'none';
+    }
+    function hideEditForm(id) {
+        document.getElementById('edit-form-' + id).style.display = 'none';
+        document.getElementById('reply-content-' + id).style.display = 'block';
+    }
+</script>
+@endpush 
