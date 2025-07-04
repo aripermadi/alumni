@@ -12,6 +12,7 @@ use App\Models\News;
 use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ForumController;
 
 Route::get('/', function () {
     $upcomingEvents = Event::whereDate('event_date', '>=', now())
@@ -85,3 +86,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
     Route::put('/profile/password', [ProfileController::class, 'passwordUpdate'])->name('profile.password.update');
 });
+
+Route::get('/forum', [ForumController::class, 'index'])->name('forum.index');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/forum/create', [ForumController::class, 'create'])->name('forum.create');
+    Route::post('/forum', [ForumController::class, 'store'])->name('forum.store');
+    Route::post('/forum/{id}/reply', [ForumController::class, 'reply'])->name('forum.reply');
+});
+
+Route::get('/forum/{id}', [ForumController::class, 'show'])->name('forum.show');

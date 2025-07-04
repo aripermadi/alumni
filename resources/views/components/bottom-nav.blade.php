@@ -26,6 +26,12 @@
             <i class="fas fa-users"></i>
             <span>Alumni</span>
         </a>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('forum.index') }}">
+                <i class="fas fa-comments"></i>
+                <span class="nav-label">Forum</span>
+            </a>
+        </li>
         @auth
             <a href="/profile" class="col nav-item {{ $active === 'profile' || $active === 'home' ? 'active' : '' }} text-decoration-none">
                 <i class="fas fa-user"></i>

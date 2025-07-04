@@ -37,6 +37,11 @@
                         <i class="fas fa-users me-1"></i> Alumni
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('forum.index') }}">
+                        <i class="fas fa-comments me-1"></i> Forum
+                    </a>
+                </li>
                 @auth
                     <li class="nav-item dropdown">
                         <a class="nav-link px-3 dropdown-toggle {{ $active === 'profile' || $active === 'home' ? 'active' : '' }}" href="/profile" id="navbarProfileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
