@@ -61,10 +61,10 @@
                 </a>
             </div>
             <div class="col-md-3">
-                <a href="/network" class="text-decoration-none">
+                <a href="/alumni" class="text-decoration-none">
                     <div class="quick-action-card d-flex flex-column align-items-center justify-content-center">
                         <i class="fas fa-network-wired mb-2"></i>
-                        <span class="mt-1">Jaringan</span>
+                        <span class="mt-1">Alumni</span>
                     </div>
                 </a>
             </div>
@@ -88,10 +88,10 @@
                     <span class="mt-1">Event</span>
                 </div>
             </a>
-            <a href="/network" class="text-decoration-none flex-shrink-0" style="width:110px;scroll-snap-align:center;">
+            <a href="/alumni" class="text-decoration-none flex-shrink-0" style="width:110px;scroll-snap-align:center;">
                 <div class="quick-action-card d-flex flex-column align-items-center justify-content-center">
                     <i class="fas fa-network-wired mb-2"></i>
-                    <span class="mt-1">Jaringan</span>
+                    <span class="mt-1">Alumni</span>
                 </div>
             </a>
         </div>
