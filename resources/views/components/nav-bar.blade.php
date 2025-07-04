@@ -22,7 +22,7 @@
                         <i class="fas fa-network-wired me-1"></i> Jaringan
                     </a>
                 </li> --}}
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link px-3 {{ $active === 'events' ? 'active' : '' }}" href="/events/all">
                         <i class="fas fa-calendar-alt me-1"></i> Event
                     </a>
@@ -31,32 +31,22 @@
                     <a class="nav-link px-3 {{ $active === 'news' ? 'active' : '' }}" href="/news/all">
                         <i class="fas fa-newspaper me-1"></i> Berita
                     </a>
+                </li> --}}
+                <li class="nav-item">
+                    <a class="nav-link px-3 {{ $active === 'forum' ? 'active' : '' }}" href="/forum">
+                        <i class="fas fa-comments me-1"></i> Forum
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link px-3 {{ $active === 'alumni' ? 'active' : '' }}" href="/alumni">
                         <i class="fas fa-users me-1"></i> Alumni
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('forum.index') }}">
-                        <i class="fas fa-comments me-1"></i> Forum
-                    </a>
-                </li>
                 @auth
-                    <li class="nav-item dropdown">
-                        <a class="nav-link px-3 dropdown-toggle {{ $active === 'profile' || $active === 'home' ? 'active' : '' }}" href="/profile" id="navbarProfileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <li class="nav-item">
+                        <a class="nav-link px-3 {{ $active === 'profile' ? 'active' : '' }}" href="{{ route('profile.index') }}">
                             <i class="fas fa-user me-1"></i> Profil
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarProfileDropdown">
-                            <li><a class="dropdown-item" href="/profile"><i class="fas fa-user me-1"></i> Lihat Profil</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}" class="d-inline">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt me-1"></i> Logout</button>
-                                </form>
-                            </li>
-                        </ul>
                     </li>
                 @else
                     <li class="nav-item">
@@ -86,9 +76,16 @@
         display: flex;
         align-items: center;
     }
+    .custom-navbar .nav-link i {
+        color: #6c757d;
+        transition: color 0.3s;
+    }
     .custom-navbar .nav-link.active, .custom-navbar .nav-link:hover {
         background: #e3f0ff;
-        color: #0d6efd;
+        color: #1565c0;
+    }
+    .custom-navbar .nav-link.active i, .custom-navbar .nav-link:hover i {
+        color: #1565c0;
     }
     .custom-navbar .nav-link.btn-link {
         border: none;
