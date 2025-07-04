@@ -130,60 +130,29 @@
                     <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Logo_UNISMA.png" alt="Logo UNISMA" class="auth-logo">
                     <div><i class="fas fa-user-circle me-2"></i> Portal Alumni UNISMA</div>
                 </div>
-                <div class="auth-tabs">
-                    <button class="auth-tab active" id="loginTab" onclick="showTab('login')">Login</button>
-                    <button class="auth-tab" id="registerTab" onclick="showTab('register')">Registrasi</button>
-                </div>
                 <div class="card-body p-4">
-                    <div id="loginForm">
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                @foreach ($errors->all() as $error)
-                                    <div>{{ $error }}</div>
-                                @endforeach
-                            </div>
-                        @endif
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
-                            <div class="mb-3 auth-input-group">
-                                <span class="input-icon"><i class="fas fa-envelope"></i></span>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required autofocus>
-                            </div>
-                            <div class="mb-3 auth-input-group">
-                                <span class="input-icon"><i class="fas fa-lock"></i></span>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-                            </div>
-                            <button type="submit" class="btn auth-btn w-100 py-2 mt-2">Login</button>
-                        </form>
-                        <div class="auth-message">
-                            Selamat datang di Portal Alumni UNISMA. Silakan login untuk terhubung dengan jaringan alumni, mendapatkan info event, dan peluang karir terbaru.
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            @foreach ($errors->all() as $error)
+                                <div>{{ $error }}</div>
+                            @endforeach
                         </div>
-                    </div>
-                    <div id="registerForm" style="display:none;">
-                        <form method="POST" action="{{ route('register') }}">
-                            @csrf
-                            <div class="mb-3 auth-input-group">
-                                <span class="input-icon"><i class="fas fa-user"></i></span>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Nama Lengkap" value="{{ old('name') }}">
-                            </div>
-                            <div class="mb-3 auth-input-group">
-                                <span class="input-icon"><i class="fas fa-envelope"></i></span>
-                                <input type="email" class="form-control" id="reg_email" name="email" placeholder="Email" value="{{ old('email') }}">
-                            </div>
-                            <div class="mb-3 auth-input-group">
-                                <span class="input-icon"><i class="fas fa-lock"></i></span>
-                                <input type="password" class="form-control" id="reg_password" name="password" placeholder="Password">
-                            </div>
-                            <div class="mb-3 auth-input-group">
-                                <span class="input-icon"><i class="fas fa-lock"></i></span>
-                                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Konfirmasi Password">
-                            </div>
-                            <button type="submit" class="btn auth-btn w-100 py-2 mt-2">Daftar</button>
-                        </form>
-                        <div class="auth-message">
-                            Sudah punya akun? <a href="#" onclick="showTab('login')">Login di sini</a>.<br>
-                            Bergabunglah dengan Portal Alumni UNISMA untuk terhubung dengan jaringan alumni, info event, dan peluang karir terbaru.
+                    @endif
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <div class="mb-3 auth-input-group">
+                            <span class="input-icon"><i class="fas fa-envelope"></i></span>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required autofocus>
                         </div>
+                        <div class="mb-3 auth-input-group">
+                            <span class="input-icon"><i class="fas fa-lock"></i></span>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn auth-btn w-100 py-2 mt-2">Login</button>
+                    </form>
+                    <div class="auth-message mt-3">
+                        Belum punya akun? <a href="{{ route('register') }}">Daftar di sini</a>.<br>
+                        Bergabunglah dengan Portal Alumni UNISMA untuk terhubung dengan alumni, info event, dan peluang karir terbaru.
                     </div>
                 </div>
             </div>

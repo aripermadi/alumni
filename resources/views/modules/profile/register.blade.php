@@ -120,7 +120,7 @@
                             </ul>
                         </div>
                     @endif
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3 register-input-group">
                             <span class="input-icon"><i class="fas fa-user"></i></span>
@@ -138,6 +138,35 @@
                             <span class="input-icon"><i class="fas fa-lock"></i></span>
                             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Konfirmasi Password" required>
                         </div>
+                        <div class="mb-3 register-input-group">
+                            <span class="input-icon"><i class="fas fa-graduation-cap"></i></span>
+                            <select class="form-control" id="angkatan" name="angkatan" required>
+                                <option value="">Pilih Angkatan</option>
+                                @for ($year = date('Y'); $year >= 2005; $year--)
+                                    <option value="{{ $year }}" {{ old('angkatan') == $year ? 'selected' : '' }}>{{ $year }}</option>
+                                @endfor
+                            </select>
+                        </div>
+                        {{-- <div class="mb-3 register-input-group">
+                            <span class="input-icon"><i class="fas fa-book"></i></span>
+                            <input type="text" class="form-control" id="jurusan" name="jurusan" placeholder="Jurusan" value="{{ old('jurusan') }}" required>
+                        </div> --}}
+                        <div class="mb-3 register-input-group">
+                            <span class="input-icon"><i class="fas fa-briefcase"></i></span>
+                            <input type="text" class="form-control" id="pekerjaan" name="pekerjaan" placeholder="Pekerjaan" value="{{ old('pekerjaan') }}">
+                        </div>
+                        <div class="mb-3 register-input-group">
+                            <span class="input-icon"><i class="fas fa-map-marker-alt"></i></span>
+                            <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Alamat" value="{{ old('alamat') }}">
+                        </div>
+                        <div class="mb-3 register-input-group">
+                            <span class="input-icon"><i class="fas fa-phone"></i></span>
+                            <input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="No. HP" value="{{ old('no_hp') }}">
+                        </div>
+                        {{-- <div class="mb-3 register-input-group">
+                            <span class="input-icon"><i class="fas fa-image"></i></span>
+                            <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
+                        </div> --}}
                         <button type="submit" class="btn register-btn w-100 py-2 mt-2">Daftar</button>
                     </form>
                     <div class="register-message">
