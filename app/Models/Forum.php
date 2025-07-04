@@ -4,7 +4,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Forum extends Model
 {
-    protected $fillable = ['user_id', 'judul', 'isi'];
+    protected $fillable = [
+        'user_id', 'judul', 'isi', 'category_id', 'sticky', 'image', 'video'
+    ];
 
     public function user() { return $this->belongsTo(User::class); }
     public function replies() { return $this->hasMany(ForumReply::class); }

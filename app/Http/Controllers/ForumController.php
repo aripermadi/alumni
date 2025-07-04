@@ -39,12 +39,18 @@ class ForumController extends Controller
             'judul' => 'required|string|max:255',
             'isi' => 'required|string',
             'category_id' => 'required|exists:forum_categories,id',
-            'image' => 'nullable|image|max:2048',
+            'media' => 'nullable|file|mimes:jpeg,png,jpg,gif,mp4,webm,ogg|max:20480',
             'sticky' => 'nullable|boolean',
         ]);
         $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('forum', 'public');
+        $videoPath = null;
+        if ($request->hasFile('media')) {
+            $file = $request->file('media');
+            if (str_starts_with($file->getMimeType(), 'image/')) {
+                $imagePath = $file->store('forum', 'public');
+            } elseif (str_starts_with($file->getMimeType(), 'video/')) {
+                $videoPath = $file->store('forum_videos', 'public');
+            }
         }
         $forum = Forum::create([
             'user_id' => Auth::id(),
@@ -53,6 +59,7 @@ class ForumController extends Controller
             'category_id' => $request->category_id,
             'sticky' => $request->sticky ? true : false,
             'image' => $imagePath,
+            'video' => $videoPath,
         ]);
         return redirect()->route('forum.show', $forum->id)->with('success', 'Topik berhasil dibuat.');
     }
@@ -61,17 +68,24 @@ class ForumController extends Controller
     {
         $request->validate([
             'isi' => 'required|string',
-            'image' => 'nullable|image|max:2048',
+            'media' => 'nullable|file|mimes:jpeg,png,jpg,gif,mp4,webm,ogg|max:20480',
         ]);
         $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('forum_replies', 'public');
+        $videoPath = null;
+        if ($request->hasFile('media')) {
+            $file = $request->file('media');
+            if (str_starts_with($file->getMimeType(), 'image/')) {
+                $imagePath = $file->store('forum_replies', 'public');
+            } elseif (str_starts_with($file->getMimeType(), 'video/')) {
+                $videoPath = $file->store('forum_replies_videos', 'public');
+            }
         }
         ForumReply::create([
             'forum_id' => $id,
             'user_id' => Auth::id(),
             'isi' => $request->isi,
             'image' => $imagePath,
+            'video' => $videoPath,
         ]);
         return redirect()->route('forum.show', $id)->with('success', 'Balasan berhasil ditambahkan.');
     }
@@ -84,12 +98,24 @@ class ForumController extends Controller
         }
         $request->validate([
             'isi' => 'required|string',
-            'image' => 'nullable|image|max:2048',
+            'media' => 'nullable|file|mimes:jpeg,png,jpg,gif,mp4,webm,ogg|max:20480',
         ]);
         $reply->isi = $request->isi;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('forum_replies', 'public');
-            $reply->image = $imagePath;
+        if ($request->has('delete_image')) {
+            $reply->image = null;
+        }
+        if ($request->has('delete_video')) {
+            $reply->video = null;
+        }
+        if ($request->hasFile('media')) {
+            $file = $request->file('media');
+            if (str_starts_with($file->getMimeType(), 'image/')) {
+                $reply->image = $file->store('forum_replies', 'public');
+                $reply->video = null;
+            } elseif (str_starts_with($file->getMimeType(), 'video/')) {
+                $reply->video = $file->store('forum_replies_videos', 'public');
+                $reply->image = null;
+            }
         }
         $reply->save();
         return redirect()->route('forum.show', $forumId)->with('success', 'Balasan berhasil diupdate.');

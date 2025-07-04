@@ -319,6 +319,7 @@
 @endpush
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.countdown-event').forEach(function(el) {
@@ -338,5 +339,14 @@ document.addEventListener('DOMContentLoaded', function() {
         setInterval(updateCountdown, 1000*60*60); // update tiap jam
     });
 });
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+    .then(function(registration) {
+      console.log('Service Worker registered with scope:', registration.scope);
+    }).catch(function(error) {
+      console.log('Service Worker registration failed:', error);
+    });
+}
 </script>
 @endpush 

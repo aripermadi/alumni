@@ -28,7 +28,7 @@
     </div>
     <x-bottom-nav :active="$active ?? 'home'" class="d-lg-none" />
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     @stack('scripts')
     <script>
       if ('serviceWorker' in navigator) {
@@ -39,6 +39,6 @@
             console.log('Service Worker registration failed:', error);
           });
       }
-    </script>
+    </script> --}}
 </body>
 </html> 

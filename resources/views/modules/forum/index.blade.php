@@ -33,9 +33,12 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card h-100 shadow border-primary border-2 rounded-4 position-relative">
                     <div class="position-absolute top-0 end-0 m-2"><span class="badge bg-primary"><i class="fas fa-thumbtack"></i> Sticky</span></div>
-                    @if($forum->image)
+                    {{-- @if($forum->image)
                         <img src="{{ asset('storage/'.$forum->image) }}" class="card-img-top" style="object-fit:cover;max-height:180px;">
                     @endif
+                    @if($forum->video)
+                        <video src="{{ asset('storage/'.$forum->video) }}" controls class="card-img-top mt-2" style="object-fit:cover;max-height:180px;width:100%;border-radius:0.5rem;"></video>
+                    @endif --}}
                     <div class="card-body d-flex flex-column justify-content-between p-4">
                         <div class="mb-2">
                             <h5 class="fw-bold mb-2"><a href="{{ route('forum.show', $forum->id) }}" class="text-decoration-none text-dark">{{ $forum->judul }}</a></h5>
@@ -63,9 +66,12 @@
                 @if($forum->sticky)
                     <div class="position-absolute top-0 end-0 m-2"><span class="badge bg-primary"><i class="fas fa-thumbtack"></i> Sticky</span></div>
                 @endif
-                @if($forum->image)
+                {{-- @if($forum->image)
                     <img src="{{ asset('storage/'.$forum->image) }}" class="card-img-top" style="object-fit:cover;max-height:180px;">
                 @endif
+                @if($forum->video)
+                    <video src="{{ asset('storage/'.$forum->video) }}" controls class="card-img-top mt-2" style="object-fit:cover;max-height:180px;width:100%;border-radius:0.5rem;"></video>
+                @endif --}}
                 <div class="card-body d-flex flex-column justify-content-between p-4">
                     <div class="mb-2">
                         <h5 class="fw-bold mb-2"><a href="{{ route('forum.show', $forum->id) }}" class="text-decoration-none text-dark">{{ $forum->judul }}</a></h5>
