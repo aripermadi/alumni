@@ -14,6 +14,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\JobsController;
+use App\Http\Controllers\ChatController;
 
 Route::get('/', function () {
     $upcomingEvents = Event::whereDate('event_date', '>=', now())
@@ -108,3 +109,13 @@ Route::get('/jobs/all', [JobsController::class, 'all'])->name('jobs.all');
 Route::resource('jobs', JobsController::class)->middleware(['auth']);
 
 Route::get('/jobs/public/{id}', [JobsController::class, 'publicShow'])->name('jobs.public.show');
+
+Route::middleware('auth')->group(function() {
+    Route::get('/chat', [App\Http\Controllers\ChatController::class, 'index'])->name('chat.index');
+    Route::get('/chat/messages/{chat}', [App\Http\Controllers\ChatController::class, 'messages'])->name('chat.messages');
+    Route::post('/chat/send', [App\Http\Controllers\ChatController::class, 'send'])->name('chat.send');
+    Route::post('/chat/start', [App\Http\Controllers\ChatController::class, 'start'])->name('chat.start');
+    Route::get('/chat/users', [App\Http\Controllers\ChatController::class, 'users'])->name('chat.users');
+    Route::get('/chat/check-new', [App\Http\Controllers\ChatController::class, 'checkNew'])->name('chat.checkNew');
+    Route::post('/chat/read/{chat}', [App\Http\Controllers\ChatController::class, 'read'])->name('chat.read');
+});

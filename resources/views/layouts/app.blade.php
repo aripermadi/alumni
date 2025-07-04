@@ -40,5 +40,6 @@
           });
       }
       </script> --}}
+    @include('modules.chat.index')
 </body>
 </html> 
