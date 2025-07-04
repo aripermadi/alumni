@@ -12,12 +12,24 @@
 </div>
 <div class="container">
     <div class="welcome-section mb-4">
-        <h4 class="mb-1">Selamat Datang,</h4>
-        @auth
-            <h5 class="mb-0">{{ Auth::user()->name }}</h5>
-        @else
-            <p class="text-muted mb-0">Alumni Kedokteran UNISMA</p>
-        @endauth
+        <div class="card welcome-card shadow-sm border-0 p-4 d-flex flex-row align-items-center" style="border-radius: 18px;">
+            <div class="avatar bg-primary text-white d-flex align-items-center justify-content-center me-3" style="width:56px;height:56px;border-radius:50%;font-size:2rem;">
+                <i class="fas fa-user"></i>
+            </div>
+            <div>
+                <div class="d-flex align-items-center mb-1">
+                    <span class="fs-5 fw-semibold me-2">Selamat Datang</span>
+                    <span class="wave" style="font-size:1.7rem;">👋</span>
+                </div>
+                <div class="fw-bold fs-4" style="letter-spacing:0.5px;">
+                    @auth
+                        {{ Auth::user()->name }}
+                    @else
+                        Alumni Kedokteran UNISMA
+                    @endauth
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="quick-actions mb-4">
@@ -173,6 +185,34 @@
         .hero-section h1 {
             font-size: 2rem;
         }
+    }
+    .welcome-card {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 4px 24px rgba(13,110,253,0.07);
+        animation: fadeInUp 0.7s;
+    }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px);}
+        to { opacity: 1; transform: translateY(0);}
+    }
+    .wave {
+        animation: wave-hand 1.7s infinite;
+        display: inline-block;
+        transform-origin: 70% 70%;
+    }
+    @keyframes wave-hand {
+        0% { transform: rotate(0deg);}
+        10% { transform: rotate(14deg);}
+        20% { transform: rotate(-8deg);}
+        30% { transform: rotate(14deg);}
+        40% { transform: rotate(-4deg);}
+        50% { transform: rotate(10deg);}
+        60% { transform: rotate(0deg);}
+        100% { transform: rotate(0deg);}
+    }
+    .avatar {
+        background: linear-gradient(135deg, #0d6efd 60%, #6ea8fe 100%);
     }
     .welcome-section {
         padding: 20px 0;
