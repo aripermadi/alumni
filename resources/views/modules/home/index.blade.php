@@ -250,5 +250,12 @@
     .btn-primary:hover {
         background: linear-gradient(90deg, #3a8dde 0%, #0d6efd 100%);
     }
+    .d-flex.d-md-none.flex-row.overflow-auto {
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE 10+ */
+    }
+    .d-flex.d-md-none.flex-row.overflow-auto::-webkit-scrollbar {
+        display: none; /* Chrome/Safari/Webkit */
+    }
 </style>
 @endpush 
