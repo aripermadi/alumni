@@ -19,6 +19,11 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-center gap-2 mb-4">
+        <a href="{{ route('news.index') }}" class="btn btn-info">Kelola Berita</a>
+        <a href="{{ route('events.index') }}" class="btn btn-warning">Kelola Event</a>
+    </div>
+
     <div class="profile-content">
         <div class="card mb-4">
             <div class="card-body">

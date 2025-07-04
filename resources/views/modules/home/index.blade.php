@@ -90,19 +90,27 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <div class="event-item">
-                    <div class="event-date">
-                        <span class="day">15</span>
-                        <span class="month">Mar</span>
+                @forelse($upcomingEvents as $event)
+                    <div class="event-item mb-3">
+                        @if($event->image)
+                            <img src="{{ asset('storage/'.$event->image) }}" alt="Gambar Event" style="width:70px; height:70px; object-fit:cover; border-radius:10px; margin-right:15px;">
+                        @endif
+                        <div class="event-date" style="display:inline-block; min-width:60px; text-align:center;">
+                            <span class="day">{{ \Carbon\Carbon::parse($event->event_date)->format('d') }}</span>
+                            <span class="month">{{ \Carbon\Carbon::parse($event->event_date)->format('M') }}</span>
+                        </div>
+                        <div class="event-details" style="display:inline-block; margin-left:15px; vertical-align:top;">
+                            <h6 class="mb-1">{{ $event->title }}</h6>
+                            <p class="text-muted small mb-0">
+                                <i class="fas fa-map-marker-alt me-2"></i>
+                                {{ $event->location }}
+                            </p>
+                            <a href="{{ route('events.show', $event->id) }}" class="btn btn-link p-0">Lihat Detail</a>
+                        </div>
                     </div>
-                    <div class="event-details">
-                        <h6 class="mb-1">Seminar Kesehatan Nasional</h6>
-                        <p class="text-muted small mb-0">
-                            <i class="fas fa-map-marker-alt me-2"></i>
-                            Aula FK UNISMA
-                        </p>
-                    </div>
-                </div>
+                @empty
+                    <div class="text-muted">Belum ada event mendatang.</div>
+                @endforelse
             </div>
         </div>
     </div>
@@ -114,13 +122,21 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <div class="news-item">
-                    <img src="https://via.placeholder.com/100" class="news-image" alt="News">
-                    <div class="news-details">
-                        <h6 class="mb-1">Inovasi Baru dalam Penanganan COVID-19</h6>
-                        <p class="text-muted small mb-0">10 Maret 2024</p>
+                @forelse($latestNews as $news)
+                    <div class="news-item mb-3">
+                        @if($news->image)
+                            <img src="{{ asset('storage/'.$news->image) }}" class="news-image" alt="News">
+                        @endif
+                        <div class="news-details">
+                            <h6 class="mb-1">{{ $news->title }}</h6>
+                            <p class="text-muted small mb-0">{{ $news->published_at ? \Carbon\Carbon::parse($news->published_at)->format('d M Y') : '-' }}</p>
+                            <p class="card-text">{{ \Illuminate\Support\Str::limit(strip_tags($news->content), 80) }}</p>
+                            <a href="{{ route('news.show', $news->id) }}" class="btn btn-link p-0">Baca selengkapnya</a>
+                        </div>
                     </div>
-                </div>
+                @empty
+                    <div class="text-muted">Belum ada berita terbaru.</div>
+                @endforelse
             </div>
         </div>
     </div>
