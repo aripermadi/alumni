@@ -23,8 +23,13 @@
                     </a>
                 </li> --}}
                 <li class="nav-item">
-                    <a class="nav-link px-3 {{ $active === 'events' ? 'active' : '' }}" href="/events">
+                    <a class="nav-link px-3 {{ $active === 'events' ? 'active' : '' }}" href="/events/all">
                         <i class="fas fa-calendar-alt me-1"></i> Event
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-3 {{ $active === 'news' ? 'active' : '' }}" href="/news/all">
+                        <i class="fas fa-newspaper me-1"></i> Berita
                     </a>
                 </li>
                 <li class="nav-item">

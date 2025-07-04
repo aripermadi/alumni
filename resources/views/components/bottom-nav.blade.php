@@ -14,9 +14,13 @@
             <i class="fas fa-network-wired"></i>
             <span>Jaringan</span>
         </a> --}}
-        <a href="/events" class="col nav-item {{ $active === 'events' ? 'active' : '' }} text-decoration-none">
+        <a href="/events/all" class="col nav-item {{ $active === 'events' ? 'active' : '' }} text-decoration-none">
             <i class="fas fa-calendar-alt"></i>
             <span>Event</span>
+        </a>
+        <a href="/news/all" class="col nav-item {{ $active === 'news' ? 'active' : '' }} text-decoration-none">
+            <i class="fas fa-newspaper"></i>
+            <span>Berita</span>
         </a>
         <a href="/alumni" class="col nav-item {{ $active === 'alumni' ? 'active' : '' }} text-decoration-none">
             <i class="fas fa-users"></i>
