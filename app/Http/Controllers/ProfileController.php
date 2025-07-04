@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Intervention\Image\Facades\Image;
 
 class ProfileController extends Controller
 {
@@ -64,5 +65,34 @@ class ProfileController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
         return redirect()->route('profile.index')->with('success', 'Password berhasil diubah.');
+    }
+
+    public function updatePicture(Request $request)
+    {
+        $request->validate([
+            'foto' => 'required|image|max:5120', // izinkan upload sampai 5MB, nanti dikompres jika >2MB
+        ]);
+        $user = Auth::user();
+        $alumni = $user->alumni;
+        if ($alumni) {
+            if ($alumni->foto) {
+                \Storage::disk('public')->delete($alumni->foto);
+            }
+            $file = $request->file('foto');
+            if ($file->getSize() > 2048 * 1024) {
+                $img = Image::make($file)->resize(600, 600, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->encode('jpg', 80); // kompres kualitas 80%
+                $filename = 'alumni/' . uniqid() . '.jpg';
+                \Storage::disk('public')->put($filename, $img);
+                $alumni->foto = $filename;
+            } else {
+                $path = $file->store('alumni', 'public');
+                $alumni->foto = $path;
+            }
+            $alumni->save();
+        }
+        return redirect()->route('profile.index')->with('success', 'Foto profil berhasil diupdate.');
     }
 } 
