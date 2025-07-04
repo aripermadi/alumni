@@ -159,6 +159,8 @@
                             <span class="input-icon"><i class="fas fa-map-marker-alt"></i></span>
                             <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Alamat" value="{{ old('alamat') }}">
                         </div>
+                        <div id="map-alamat" style="height: 250px; border-radius: 12px; margin-bottom: 1rem;"></div>
+                        <button type="button" id="btn-lokasi-saya" class="btn btn-outline-primary btn-sm mb-3"><i class="fas fa-location-arrow me-1"></i> Gunakan Lokasi Saya</button>
                         <div class="mb-3 register-input-group">
                             <span class="input-icon"><i class="fas fa-phone"></i></span>
                             <input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="No. HP" value="{{ old('no_hp') }}">
@@ -178,4 +180,72 @@
         </div>
     </div>
 </div>
+
+@push('styles')
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+@endpush
+
+@push('scripts')
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var map = L.map('map-alamat').setView([-7.9797, 112.6304], 13); // Koordinat default Malang
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    var marker;
+    var alamatInput = document.getElementById('alamat');
+
+    // Geocoder
+    var geocoder = L.Control.geocoder({
+        defaultMarkGeocode: false
+    })
+    .on('markgeocode', function(e) {
+        var latlng = e.geocode.center;
+        if (marker) map.removeLayer(marker);
+        marker = L.marker(latlng).addTo(map);
+        map.setView(latlng, 16);
+        alamatInput.value = e.geocode.name;
+    })
+    .addTo(map);
+
+    // Klik map untuk set marker & reverse geocode
+    map.on('click', function(e) {
+        if (marker) map.removeLayer(marker);
+        marker = L.marker(e.latlng).addTo(map);
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${e.latlng.lat}&lon=${e.latlng.lng}`)
+            .then(res => res.json())
+            .then(data => {
+                alamatInput.value = data.display_name || `${e.latlng.lat},${e.latlng.lng}`;
+            });
+    });
+
+    // Gunakan Lokasi Saya
+    document.getElementById('btn-lokasi-saya').addEventListener('click', function() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
+                var latlng = [lat, lng];
+                if (marker) map.removeLayer(marker);
+                marker = L.marker(latlng).addTo(map);
+                map.setView(latlng, 16);
+                fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        alamatInput.value = data.display_name || `${lat},${lng}`;
+                    });
+            }, function() {
+                alert('Gagal mengambil lokasi. Pastikan izin lokasi diaktifkan.');
+            });
+        } else {
+            alert('Browser Anda tidak mendukung geolokasi.');
+        }
+    });
+});
+</script>
+@endpush
 @endsection 
