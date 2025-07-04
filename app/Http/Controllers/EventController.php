@@ -12,9 +12,13 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $events = Event::orderByDesc('event_date')->get();
+        $query = Event::orderByDesc('event_date');
+        if ($request->has('q') && $request->q) {
+            $query->where('title', 'like', '%' . $request->q . '%');
+        }
+        $events = $query->get();
         return view('modules.events.index', compact('events'));
     }
 
@@ -104,5 +108,27 @@ class EventController extends Controller
     {
         $event->delete();
         return redirect()->route('events.index')->with('success', 'Event berhasil dihapus.');
+    }
+
+    /**
+     * Tampilkan semua event untuk user (tanpa tombol admin).
+     */
+    public function all(Request $request)
+    {
+        $query = Event::orderByDesc('event_date');
+        if ($request->has('q') && $request->q) {
+            $query->where('title', 'like', '%' . $request->q . '%');
+        }
+        $events = $query->get();
+        return view('modules.events.all', compact('events'));
+    }
+
+    /**
+     * Tampilkan detail event untuk user/pengunjung (tanpa login).
+     */
+    public function publicShow($id)
+    {
+        $event = Event::findOrFail($id);
+        return view('modules.events.public_show', compact('event'));
     }
 }

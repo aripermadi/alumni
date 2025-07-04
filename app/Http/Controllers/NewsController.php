@@ -101,4 +101,26 @@ class NewsController extends Controller
         $news->delete();
         return redirect()->route('news.index')->with('success', 'Berita berhasil dihapus.');
     }
+
+    /**
+     * Tampilkan semua berita untuk user (tanpa tombol admin).
+     */
+    public function all(Request $request)
+    {
+        $query = News::orderByDesc('published_at');
+        if ($request->has('q') && $request->q) {
+            $query->where('title', 'like', '%' . $request->q . '%');
+        }
+        $news = $query->get();
+        return view('modules.news.all', compact('news'));
+    }
+
+    /**
+     * Tampilkan detail berita untuk user/pengunjung (tanpa login).
+     */
+    public function publicShow($id)
+    {
+        $news = News::findOrFail($id);
+        return view('modules.news.public_show', compact('news'));
+    }
 }

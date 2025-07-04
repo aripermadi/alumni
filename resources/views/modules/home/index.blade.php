@@ -98,7 +98,7 @@
     <div class="upcoming-events mb-4">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h5 class="mb-0">Event Mendatang</h5>
-            <a href="/events" class="text-decoration-none">Lihat Semua</a>
+            <a href="{{ route('events.all') }}" class="text-decoration-none">Lihat Semua</a>
         </div>
         <div class="card">
             <div class="card-body">
@@ -117,7 +117,7 @@
                                 <i class="fas fa-map-marker-alt me-2"></i>
                                 {{ $event->location }}
                             </p>
-                            <a href="{{ route('events.show', $event->id) }}" class="btn btn-link p-0">Lihat Detail</a>
+                            <a href="{{ route('events.public.show', $event->id) }}" class="btn btn-link p-0">Lihat Detail</a>
                         </div>
                     </div>
                 @empty
@@ -130,7 +130,7 @@
     <div class="latest-news">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h5 class="mb-0">Berita Terbaru</h5>
-            <a href="/news" class="text-decoration-none">Lihat Semua</a>
+            <a href="{{ route('news.all') }}" class="text-decoration-none">Lihat Semua</a>
         </div>
         <div class="card">
             <div class="card-body">
@@ -143,7 +143,7 @@
                             <h6 class="mb-1">{{ $news->title }}</h6>
                             <p class="text-muted small mb-0">{{ $news->published_at ? \Carbon\Carbon::parse($news->published_at)->format('d M Y') : '-' }}</p>
                             <p class="card-text">{{ \Illuminate\Support\Str::limit(strip_tags($news->content), 80) }}</p>
-                            <a href="{{ route('news.show', $news->id) }}" class="btn btn-link p-0">Baca selengkapnya</a>
+                            <a href="{{ route('news.public.show', $news->id) }}" class="btn btn-link p-0">Baca selengkapnya</a>
                         </div>
                     </div>
                 @empty

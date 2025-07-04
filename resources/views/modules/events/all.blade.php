@@ -3,10 +3,9 @@
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3>Daftar Event</h3>
-        <a href="{{ route('events.create') }}" class="btn btn-primary">Tambah Event</a>
+        <h3 class="fw-bold">Semua Event</h3>
     </div>
-    <form method="GET" action="{{ route('events.index') }}" class="mb-4">
+    <form method="GET" action="{{ route('events.all') }}" class="mb-4">
         <div class="input-group">
             <input type="text" name="q" class="form-control" placeholder="Cari event..." value="{{ request('q') }}">
             <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i> Cari</button>
@@ -25,14 +24,8 @@
                             <i class="fas fa-calendar-alt me-1"></i> {{ $item->event_date ? \Carbon\Carbon::parse($item->event_date)->format('d-m-Y') : '-' }}<br>
                             <i class="fas fa-map-marker-alt me-1"></i> {{ $item->location }}
                         </div>
-                        <div class="mt-auto d-flex gap-2">
-                            <a href="{{ route('events.show', $item->id) }}" class="btn btn-sm btn-info"><i class="fas fa-eye"></i> Detail</a>
-                            <a href="{{ route('events.edit', $item->id) }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>
-                            <form action="{{ route('events.destroy', $item->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus?')"><i class="fas fa-trash-alt"></i> Hapus</button>
-                            </form>
+                        <div class="mt-auto">
+                            <a href="{{ route('events.public.show', $item->id) }}" class="btn btn-sm btn-info w-100"><i class="fas fa-eye"></i> Detail</a>
                         </div>
                     </div>
                 </div>
@@ -60,7 +53,7 @@
 .card:hover {
     box-shadow: 0 6px 24px rgba(13,110,253,0.12);
 }
-.btn-warning, .btn-danger, .btn-info {
+.btn-info {
     min-width: 80px;
 }
 .event-card {

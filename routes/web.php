@@ -58,8 +58,14 @@ Route::post('/logout', function (Request $request) {
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 
+Route::get('/events/all', [EventController::class, 'all'])->name('events.all');
+Route::get('/news/all', [NewsController::class, 'all'])->name('news.all');
+
 Route::resource('news', NewsController::class)->middleware('auth');
 Route::resource('events', EventController::class)->middleware('auth');
 
 Route::get('news/{news}', [NewsController::class, 'show'])->name('news.show')->middleware('auth');
 Route::get('events/{event}', [EventController::class, 'show'])->name('events.show')->middleware('auth');
+
+Route::get('/events/public/{id}', [EventController::class, 'publicShow'])->name('events.public.show');
+Route::get('/news/public/{id}', [NewsController::class, 'publicShow'])->name('news.public.show');
