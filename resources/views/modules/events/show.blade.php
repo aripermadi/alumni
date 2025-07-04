@@ -13,8 +13,14 @@
             @php
             if (!function_exists('linkify')) {
                 function linkify($text) {
-                    $pattern = '/(https?:\/\/[\w\-\.\/?&=%#]+[\w\-\/?&=%#])/i';
-                    return preg_replace($pattern, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>', $text);
+                    // Deteksi http(s)://, www., dan wa.me
+                    $pattern = '/((https?:\/\/|www\.)[^\s<]+)/i';
+                    $text = preg_replace_callback($pattern, function($matches) {
+                        $url = $matches[0];
+                        $href = preg_match('/^https?:\/\//i', $url) ? $url : 'http://' . $url;
+                        return '<a href="' . $href . '" target="_blank" rel="noopener noreferrer">' . $url . '</a>';
+                    }, $text);
+                    return $text;
                 }
             }
             @endphp
