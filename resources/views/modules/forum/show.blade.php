@@ -9,7 +9,7 @@
                     <div class="position-absolute top-0 end-0 m-2"><span class="badge bg-primary"><i class="fas fa-thumbtack"></i> Sticky</span></div>
                 @endif
                 @if($forum->image)
-                    <img src="{{ asset('storage/'.$forum->image) }}" class="card-img-top" style="object-fit:cover;max-height:260px;">
+                    <img src="{{ asset('storage/'.$forum->image) }}" class="card-img-top" style="object-fit:cover;max-height:260px;cursor:pointer;" onclick="showImageModal('{{ asset('storage/'.$forum->image) }}')">
                 @endif
                 <div class="card-body p-4">
                     <div class="mb-2">
@@ -37,7 +37,7 @@
                                 @endauth
                             </div>
                             @if($reply->image)
-                                <img src="{{ asset('storage/'.$reply->image) }}" class="rounded mb-2" style="max-width:180px;max-height:120px;object-fit:cover;">
+                                <img src="{{ asset('storage/'.$reply->image) }}" class="rounded mb-2" style="max-width:180px;max-height:120px;object-fit:cover;cursor:pointer;" onclick="showImageModal('{{ asset('storage/'.$reply->image) }}')">
                             @endif
                             <div id="reply-content-{{ $reply->id }}">{!! nl2br(e($reply->isi)) !!}</div>
                             @auth
@@ -98,6 +98,17 @@
         </div>
     </div>
 </div>
+
+{{-- Modal Preview Gambar --}}
+<div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-labelledby="imagePreviewModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-transparent border-0">
+      <div class="modal-body text-center p-0">
+        <img id="modalImagePreview" src="#" alt="Preview" style="max-width:100%;max-height:80vh;" class="rounded shadow">
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 
 @push('scripts')
@@ -138,6 +149,11 @@
         preview.src = '#';
         preview.style.display = 'none';
         if (removeBtn) removeBtn.style.display = 'none';
+    }
+    function showImageModal(src) {
+        var modal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
+        document.getElementById('modalImagePreview').src = src;
+        modal.show();
     }
 </script>
 @endpush 
