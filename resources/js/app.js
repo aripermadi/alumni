@@ -45,14 +45,14 @@ function showPwaInstallPopup() {
     const popup = document.createElement('div');
     popup.id = 'pwa-install-popup';
     popup.innerHTML = `
-        <div style="position:fixed;bottom:30px;right:30px;z-index:9999;background:#fff;border-radius:1rem;box-shadow:0 4px 24px rgba(13,110,253,0.13);padding:1.5rem 2rem;display:flex;align-items:center;gap:1.2rem;max-width:350px;">
-            <div style="font-size:2rem;color:#0d6efd;"><i class='fas fa-download'></i></div>
-            <div style="flex:1;">
-                <div style="font-weight:600;font-size:1.1rem;">Install Aplikasi Alumni?</div>
-                <div style="font-size:0.95rem;color:#555;">Dapatkan pengalaman terbaik dengan menginstall aplikasi ini di perangkat Anda.</div>
+        <div style="position:fixed;top:24px;right:24px;z-index:9999;background:#fff;border-radius:0.9rem;box-shadow:0 2px 16px rgba(13,110,253,0.13);padding:0.9rem 1.2rem;display:flex;align-items:center;gap:0.8rem;max-width:260px;min-width:200px;">
+            <div style="font-size:1.4rem;color:#0d6efd;flex-shrink:0;"><i class='fas fa-download'></i></div>
+            <div style="flex:1;min-width:0;">
+                <div style="font-weight:600;font-size:1rem;line-height:1.2;">Install Alumni?</div>
+                
             </div>
-            <button id="pwa-install-btn" style="background:#0d6efd;color:#fff;border:none;border-radius:0.7rem;padding:0.5rem 1.2rem;font-weight:600;">Pasang</button>
-            <button id="pwa-close-btn" style="background:none;border:none;color:#888;font-size:1.3rem;margin-left:0.5rem;">&times;</button>
+            <button id="pwa-install-btn" style="background:#0d6efd;color:#fff;border:none;border-radius:0.6rem;padding:0.35rem 0.9rem;font-weight:600;font-size:0.95rem;line-height:1;">Pasang</button>
+            <button id="pwa-close-btn" style="background:none;border:none;color:#888;font-size:1.1rem;margin-left:0.3rem;">&times;</button>
         </div>
     `;
     document.body.appendChild(popup);
