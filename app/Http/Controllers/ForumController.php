@@ -12,7 +12,7 @@ class ForumController extends Controller
     public function index(Request $request)
     {
         $kategori = ForumCategory::all();
-        $query = Forum::with('user', 'category');
+        $query = Forum::with('user', 'category')->withCount('replies');
         if ($request->has('kategori') && $request->kategori) {
             $query->where('category_id', $request->kategori);
         }

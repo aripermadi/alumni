@@ -39,6 +39,9 @@
                     <div class="card-body d-flex flex-column justify-content-between p-4">
                         <div class="mb-2">
                             <h5 class="fw-bold mb-2"><a href="{{ route('forum.show', $forum->id) }}" class="text-decoration-none text-dark">{{ $forum->judul }}</a></h5>
+                            <div class="mb-1">
+                                <span class="me-2"><i class="fas fa-comments"></i> {{ $forum->replies_count }} Komentar</span>
+                            </div>
                             <div class="mb-2">
                                 <span class="badge bg-info text-dark me-1">{{ $forum->category->nama ?? '-' }}</span>
                                 <span class="text-muted small">Oleh: {{ $forum->user->name }} &bull; {{ $forum->created_at->diffForHumans() }}</span>
@@ -66,6 +69,9 @@
                 <div class="card-body d-flex flex-column justify-content-between p-4">
                     <div class="mb-2">
                         <h5 class="fw-bold mb-2"><a href="{{ route('forum.show', $forum->id) }}" class="text-decoration-none text-dark">{{ $forum->judul }}</a></h5>
+                        <div class="mb-1">
+                            <span class="me-2"><i class="fas fa-comments"></i> {{ $forum->replies_count }} Komentar</span>
+                        </div>
                         <div class="mb-2">
                             <span class="badge bg-info text-dark me-1">{{ $forum->category->nama ?? '-' }}</span>
                             <span class="text-muted small">Oleh: {{ $forum->user->name }} &bull; {{ $forum->created_at->diffForHumans() }}</span>
