@@ -15,7 +15,7 @@
             background-color: #f8f9fa;
         }
         .content-wrapper {
-            padding: 20px;
+            /* padding: 20px; */
             margin-bottom: 20px;
         }
     </style>
