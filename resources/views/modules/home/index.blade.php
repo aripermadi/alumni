@@ -9,7 +9,7 @@
         </div>
         <h1 class="display-3 fw-bold mb-2" style="letter-spacing:1px; text-shadow:0 2px 16px rgba(0,0,0,0.13);">Selamat Datang di <span style="color:#ffe066;">Alumni FK UNISMA</span></h1>
         <p class="lead mb-4" style="font-size:1.35rem; max-width:600px; margin:auto; text-shadow:0 1px 8px rgba(0,0,0,0.10);">Bangun koneksi, dapatkan informasi, dan berkembang bersama komunitas alumni terbaik.</p>
-        <a href="/network" class="btn btn-lg px-5 py-3 fw-semibold shadow join-btn">Gabung Jaringan Alumni</a>
+        {{-- <a href="/network" class="btn btn-lg px-5 py-3 fw-semibold shadow join-btn">Gabung Jaringan Alumni</a> --}}
     </div>
 </div>
 <div class="container">
