@@ -10,6 +10,8 @@ use App\Http\Controllers\EventController;
 use App\Models\Event;
 use App\Models\News;
 use App\Http\Controllers\AlumniController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     $upcomingEvents = Event::whereDate('event_date', '>=', now())
@@ -73,3 +75,13 @@ Route::get('/news/public/{id}', [NewsController::class, 'publicShow'])->name('ne
 
 Route::get('/alumni', [AlumniController::class, 'index'])->name('alumni.index');
 Route::get('/alumni/{id}', [AlumniController::class, 'show'])->name('alumni.show');
+
+Route::resource('user', UserController::class)->middleware('auth');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
+    Route::put('/profile/password', [ProfileController::class, 'passwordUpdate'])->name('profile.password.update');
+});
