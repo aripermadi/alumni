@@ -76,13 +76,13 @@
                     <span class="mt-1">Lowongan</span>
                 </div>
             </a>
-            <a href="/news" class="text-decoration-none flex-shrink-0" style="width:110px;scroll-snap-align:center;">
+            <a href="/news/all" class="text-decoration-none flex-shrink-0" style="width:110px;scroll-snap-align:center;">
                 <div class="quick-action-card d-flex flex-column align-items-center justify-content-center">
                     <i class="fas fa-newspaper mb-2"></i>
                     <span class="mt-1">Berita</span>
                 </div>
             </a>
-            <a href="/events" class="text-decoration-none flex-shrink-0" style="width:110px;scroll-snap-align:center;">
+            <a href="/events/all" class="text-decoration-none flex-shrink-0" style="width:110px;scroll-snap-align:center;">
                 <div class="quick-action-card d-flex flex-column align-items-center justify-content-center">
                     <i class="fas fa-calendar-alt mb-2"></i>
                     <span class="mt-1">Event</span>
