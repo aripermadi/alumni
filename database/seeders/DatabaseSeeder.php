@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\News;
 use App\Models\Event;
+use App\Models\Alumni;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -16,45 +17,40 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+       
 
-        // Seeder contoh berita
-        News::create([
-            'title' => 'Inovasi Baru dalam Penanganan COVID-19',
-            'content' => 'Peneliti UNISMA mengembangkan metode baru untuk penanganan pasien COVID-19 yang lebih efektif...',
-            'published_at' => now()->subDays(2),
-            'user_id' => 1,
-            'image' => null,
+        // Seeder contoh alumni
+        $user1 = \App\Models\User::firstOrCreate([
+            'email' => 'alumni1@example.com'
+        ], [
+            'name' => 'Alumni Satu',
+            'password' => bcrypt('password'),
+            'role' => 'alumni',
         ]);
-        News::create([
-            'title' => 'Fakultas Kedokteran UNISMA Raih Akreditasi A',
-            'content' => 'Fakultas Kedokteran UNISMA berhasil meraih akreditasi A dari BAN-PT...',
-            'published_at' => now()->subDays(5),
-            'user_id' => 1,
-            'image' => null,
+        $user2 = \App\Models\User::firstOrCreate([
+            'email' => 'alumni2@example.com'
+        ], [
+            'name' => 'Alumni Dua',
+            'password' => bcrypt('password'),
+            'role' => 'alumni',
         ]);
-
-        // Seeder contoh event
-        Event::create([
-            'title' => 'Seminar Kesehatan Nasional',
-            'description' => 'Seminar tentang inovasi kesehatan nasional.',
-            'event_date' => now()->addDays(5),
-            'location' => 'Aula FK UNISMA',
-            'user_id' => 1,
-            'image' => null,
+        Alumni::create([
+            'user_id' => $user1->id,
+            'angkatan' => '2015',
+            'jurusan' => 'Kedokteran',
+            'pekerjaan' => 'Dokter Umum',
+            'alamat' => 'Jl. Mawar No. 1',
+            'no_hp' => '081234567890',
+            'foto' => null,
         ]);
-        Event::create([
-            'title' => 'Workshop Penulisan Karya Ilmiah',
-            'description' => 'Workshop teknik penulisan karya ilmiah yang baik dan benar.',
-            'event_date' => now()->addDays(10),
-            'location' => 'Ruang Seminar FK',
-            'user_id' => 1,
-            'image' => null,
-        ]);
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        Alumni::create([
+            'user_id' => $user2->id,
+            'angkatan' => '2017',
+            'jurusan' => 'Kedokteran',
+            'pekerjaan' => 'Peneliti',
+            'alamat' => 'Jl. Melati No. 2',
+            'no_hp' => '081298765432',
+            'foto' => null,
         ]);
     }
 }

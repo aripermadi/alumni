@@ -10,13 +10,17 @@
             <i class="fas fa-home"></i>
             <span>Beranda</span>
         </a>
-        <a href="/network" class="col nav-item {{ $active === 'network' ? 'active' : '' }} text-decoration-none">
+        {{-- <a href="/network" class="col nav-item {{ $active === 'network' ? 'active' : '' }} text-decoration-none">
             <i class="fas fa-network-wired"></i>
             <span>Jaringan</span>
-        </a>
+        </a> --}}
         <a href="/events" class="col nav-item {{ $active === 'events' ? 'active' : '' }} text-decoration-none">
             <i class="fas fa-calendar-alt"></i>
             <span>Event</span>
+        </a>
+        <a href="/alumni" class="col nav-item {{ $active === 'alumni' ? 'active' : '' }} text-decoration-none">
+            <i class="fas fa-users"></i>
+            <span>Alumni</span>
         </a>
         @auth
             <a href="/profile" class="col nav-item {{ $active === 'profile' || $active === 'home' ? 'active' : '' }} text-decoration-none">

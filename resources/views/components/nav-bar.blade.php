@@ -17,14 +17,19 @@
                         <i class="fas fa-home me-1"></i> Beranda
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link px-3 {{ $active === 'network' ? 'active' : '' }}" href="/network">
                         <i class="fas fa-network-wired me-1"></i> Jaringan
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link px-3 {{ $active === 'events' ? 'active' : '' }}" href="/events">
                         <i class="fas fa-calendar-alt me-1"></i> Event
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-3 {{ $active === 'alumni' ? 'active' : '' }}" href="/alumni">
+                        <i class="fas fa-users me-1"></i> Alumni
                     </a>
                 </li>
                 @auth

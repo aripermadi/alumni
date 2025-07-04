@@ -9,6 +9,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\EventController;
 use App\Models\Event;
 use App\Models\News;
+use App\Http\Controllers\AlumniController;
 
 Route::get('/', function () {
     $upcomingEvents = Event::whereDate('event_date', '>=', now())
@@ -69,3 +70,6 @@ Route::get('events/{event}', [EventController::class, 'show'])->name('events.sho
 
 Route::get('/events/public/{id}', [EventController::class, 'publicShow'])->name('events.public.show');
 Route::get('/news/public/{id}', [NewsController::class, 'publicShow'])->name('news.public.show');
+
+Route::get('/alumni', [AlumniController::class, 'index'])->name('alumni.index');
+Route::get('/alumni/{id}', [AlumniController::class, 'show'])->name('alumni.show');
