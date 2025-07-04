@@ -49,7 +49,9 @@
                                             <textarea name="isi" class="form-control" rows="3" required>{{ $reply->isi }}</textarea>
                                         </div>
                                         <div class="mb-2">
-                                            <input type="file" name="image" class="form-control" accept="image/*">
+                                            <input type="file" name="image" class="form-control" accept="image/*" onchange="previewImage(event, 'preview-edit-image-{{ $reply->id }}', 'remove-edit-image-btn-{{ $reply->id }}')">
+                                            <img id="preview-edit-image-{{ $reply->id }}" src="#" alt="Preview" class="mt-2 rounded" style="max-width:180px;max-height:120px;display:none;object-fit:cover;">
+                                            <button type="button" class="btn btn-sm btn-danger mt-2" id="remove-edit-image-btn-{{ $reply->id }}" style="display:none;" onclick="removeImage('', 'preview-edit-image-{{ $reply->id }}', 'remove-edit-image-btn-{{ $reply->id }}', this)">Hapus Gambar</button>
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
                                         <button type="button" class="btn btn-secondary btn-sm" onclick="hideEditForm({{ $reply->id }})">Batal</button>
@@ -72,7 +74,9 @@
                         </div>
                         <div class="mb-3">
                             <label for="image" class="form-label">Gambar (opsional)</label>
-                            <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
+                            <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror" accept="image/*" onchange="previewImage(event, 'preview-image', 'remove-image-btn')">
+                            <img id="preview-image" src="#" alt="Preview" class="mt-2 rounded" style="max-width:180px;max-height:120px;display:none;object-fit:cover;">
+                            <button type="button" class="btn btn-sm btn-danger mt-2" id="remove-image-btn" style="display:none;" onclick="removeImage('image', 'preview-image', 'remove-image-btn')">Hapus Gambar</button>
                             @error('image')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -105,6 +109,35 @@
     function hideEditForm(id) {
         document.getElementById('edit-form-' + id).style.display = 'none';
         document.getElementById('reply-content-' + id).style.display = 'block';
+    }
+    function previewImage(event, previewId, removeBtnId = null) {
+        const input = event.target;
+        const preview = document.getElementById(previewId);
+        const removeBtn = removeBtnId ? document.getElementById(removeBtnId) : document.getElementById('remove-image-btn');
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                if (removeBtn) removeBtn.style.display = 'inline-block';
+            }
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.src = '#';
+            preview.style.display = 'none';
+            if (removeBtn) removeBtn.style.display = 'none';
+        }
+    }
+    function removeImage(inputId, previewId, removeBtnId, btn = null) {
+        let input;
+        if(inputId) input = document.getElementById(inputId);
+        else if(btn) input = btn.previousElementSibling.previousElementSibling; // fallback untuk edit form
+        const preview = document.getElementById(previewId);
+        const removeBtn = document.getElementById(removeBtnId);
+        if (input) input.value = '';
+        preview.src = '#';
+        preview.style.display = 'none';
+        if (removeBtn) removeBtn.style.display = 'none';
     }
 </script>
 @endpush 
