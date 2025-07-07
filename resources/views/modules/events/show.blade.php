@@ -5,7 +5,7 @@
     <div class="card mb-4">
         <!-- Main Image -->
         @if($event->main_image)
-            <img src="{{ asset('storage/'.$event->main_image) }}" class="card-img-top" alt="Gambar Event" style="max-height:300px; object-fit:cover;">
+            <img src="{{ asset('storage/'.$event->main_image) }}" class="card-img-top img-fluid" style="max-width:100%; height:auto; object-fit:contain; background:#f8f9fa; border-radius:1.2rem 1.2rem 0 0;">
         @endif
         
         <div class="card-body">
@@ -37,9 +37,9 @@
                     <div class="col-md-4 mb-3">
                         <div class="card">
                             <img src="{{ asset('storage/'.$image->image_path) }}" 
-                                 class="card-img-top event-gallery-image" 
+                                 class="card-img-top event-gallery-image img-fluid" 
                                  alt="Event Image" 
-                                 style="height: 200px; object-fit: cover; cursor: pointer;"
+                                 style="height: 200px; object-fit: contain; background:#f8f9fa; cursor: pointer;"
                                  data-bs-toggle="modal" 
                                  data-bs-target="#imageModal"
                                  data-image="{{ asset('storage/'.$image->image_path) }}"

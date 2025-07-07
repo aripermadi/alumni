@@ -5,7 +5,7 @@
     <div class="card mb-4 shadow-sm border-0" style="border-radius: 1.2rem;">
         <!-- Main Image -->
         @if($event->main_image)
-            <img src="{{ asset('storage/'.$event->main_image) }}" class="card-img-top" alt="Gambar Event" style="max-height:300px; object-fit:cover; border-top-left-radius:1.2rem; border-top-right-radius:1.2rem;">
+            <img src="{{ asset('storage/'.$event->main_image) }}" class="card-img-top img-fluid" style="max-width:100%; height:auto; object-fit:contain; background:#f8f9fa; border-radius:1.2rem 1.2rem 0 0;">
         @endif
         
         <div class="card-body">
@@ -23,9 +23,9 @@
                     <div class="col-md-4 mb-3">
                         <div class="card shadow-sm">
                             <img src="{{ asset('storage/'.$image->image_path) }}" 
-                                 class="card-img-top event-gallery-image" 
+                                 class="card-img-top event-gallery-image img-fluid" 
                                  alt="Event Image" 
-                                 style="height: 200px; object-fit: cover; cursor: pointer;"
+                                 style="height: 200px; object-fit: contain; background:#f8f9fa; cursor: pointer;"
                                  data-bs-toggle="modal" 
                                  data-bs-target="#imageModal"
                                  data-image="{{ asset('storage/'.$image->image_path) }}"
@@ -65,12 +65,10 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Handle gallery image clicks
     document.querySelectorAll('.event-gallery-image').forEach(image => {
         image.addEventListener('click', function() {
             const modalImage = document.getElementById('modalImage');
             const modalCaption = document.getElementById('modalCaption');
-            
             modalImage.src = this.dataset.image;
             modalCaption.textContent = this.dataset.caption || '';
         });
