@@ -61,5 +61,8 @@ class DatabaseSeeder extends Seeder
             ['nama' => 'Tips & Pengalaman', 'slug' => 'tips-pengalaman', 'created_at' => now(), 'updated_at' => now()],
             ['nama' => 'Teknologi', 'slug' => 'teknologi', 'created_at' => now(), 'updated_at' => now()],
         ]);
+
+        // Seed event images
+        $this->call(EventImageSeeder::class);
     }
 }

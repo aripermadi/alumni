@@ -1,8 +1,8 @@
 @foreach($events as $item)
     <div class="col-md-6 col-lg-4">
         <div class="card h-100 shadow-sm border-0 event-card">
-            @if($item->image)
-                <img src="{{ asset('storage/'.$item->image) }}" class="card-img-top" alt="Gambar Event" style="height:180px; object-fit:cover;">
+            @if($item->main_image)
+                <img src="{{ asset('storage/'.$item->main_image) }}" class="card-img-top" alt="Gambar Event" style="height:180px; object-fit:cover;">
             @endif
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title mb-1">{{ $item->title }}</h5>

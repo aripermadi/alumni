@@ -14,4 +14,14 @@ class Event extends Model
         'user_id',
         'image',
     ];
+
+    public function images()
+    {
+        return $this->hasMany(EventImage::class)->orderBy('order');
+    }
+
+    public function getMainImageAttribute()
+    {
+        return $this->image ?? $this->images->first()?->image_path;
+    }
 }

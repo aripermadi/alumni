@@ -74,6 +74,7 @@ Route::get('/news/public/{id}', [NewsController::class, 'publicShow'])->name('ne
 
 Route::resource('news', NewsController::class)->middleware('auth');
 Route::resource('events', EventController::class)->middleware('auth');
+Route::delete('/events/{event}/images/{image}', [EventController::class, 'deleteImage'])->name('events.delete-image')->middleware('auth');
 
 Route::get('news/{news}', [NewsController::class, 'show'])->name('news.show')->middleware('auth');
 Route::get('events/{event}', [EventController::class, 'show'])->name('events.show')->middleware('auth');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\EventImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -41,23 +42,16 @@ class EventController extends Controller
             'description' => 'required',
             'event_date' => 'required|date',
             'location' => 'required',
-            'image' => 'nullable|image|max:5120',
+            'images.*' => 'nullable|image|max:5120',
+            'image' => 'nullable|image|max:5120', // untuk backward compatibility
         ]);
+
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $category = $request->category_id ?? 'uncategorized';
-            $folder = 'events/' . $category;
-            if ($file->getSize() > 2048 * 1024) {
-                $img = Image::make($file)->resize(800, 600, function ($c) { $c->aspectRatio(); $c->upsize(); })->encode('jpg', 80);
-                $filename = $folder . '/' . uniqid() . '.jpg';
-                \Storage::disk('public')->put($filename, $img);
-                $imagePath = $filename;
-            } else {
-                $imagePath = $file->store($folder, 'public');
-            }
+            $imagePath = $this->uploadImage($request->file('image'), 'events');
         }
-        Event::create([
+
+        $event = Event::create([
             'title' => $request->title,
             'description' => $request->description,
             'event_date' => $request->event_date,
@@ -65,6 +59,20 @@ class EventController extends Controller
             'user_id' => Auth::id(),
             'image' => $imagePath,
         ]);
+
+        // Upload multiple images
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $index => $image) {
+                $imagePath = $this->uploadImage($image, 'events');
+                EventImage::create([
+                    'event_id' => $event->id,
+                    'image_path' => $imagePath,
+                    'caption' => $request->input("captions.{$index}"),
+                    'order' => $index,
+                ]);
+            }
+        }
+
         return redirect()->route('events.index')->with('success', 'Event berhasil ditambahkan.');
     }
 
@@ -94,31 +102,39 @@ class EventController extends Controller
             'description' => 'required',
             'event_date' => 'required|date',
             'location' => 'required',
-            'image' => 'nullable|image|max:5120',
+            'images.*' => 'nullable|image|max:5120',
+            'image' => 'nullable|image|max:5120', // untuk backward compatibility
         ]);
+
         $data = [
             'title' => $request->title,
             'description' => $request->description,
             'event_date' => $request->event_date,
             'location' => $request->location,
         ];
+
         if ($request->hasFile('image')) {
             if ($event->image) {
                 \Storage::disk('public')->delete($event->image);
             }
-            $file = $request->file('image');
-            $category = $request->category_id ?? ($event->category_id ?? 'uncategorized');
-            $folder = 'events/' . $category;
-            if ($file->getSize() > 2048 * 1024) {
-                $img = Image::make($file)->resize(800, 600, function ($c) { $c->aspectRatio(); $c->upsize(); })->encode('jpg', 80);
-                $filename = $folder . '/' . uniqid() . '.jpg';
-                \Storage::disk('public')->put($filename, $img);
-                $data['image'] = $filename;
-            } else {
-                $data['image'] = $file->store($folder, 'public');
+            $data['image'] = $this->uploadImage($request->file('image'), 'events');
+        }
+
+        $event->update($data);
+
+        // Handle multiple images
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $index => $image) {
+                $imagePath = $this->uploadImage($image, 'events');
+                EventImage::create([
+                    'event_id' => $event->id,
+                    'image_path' => $imagePath,
+                    'caption' => $request->input("captions.{$index}"),
+                    'order' => $event->images()->count() + $index,
+                ]);
             }
         }
-        $event->update($data);
+
         return redirect()->route('events.index')->with('success', 'Event berhasil diupdate.');
     }
 
@@ -127,8 +143,53 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
+        // Delete all event images
+        foreach ($event->images as $image) {
+            \Storage::disk('public')->delete($image->image_path);
+        }
+        
+        if ($event->image) {
+            \Storage::disk('public')->delete($event->image);
+        }
+        
         $event->delete();
         return redirect()->route('events.index')->with('success', 'Event berhasil dihapus.');
+    }
+
+    /**
+     * Delete event image
+     */
+    public function deleteImage(Request $request, $eventId, $imageId)
+    {
+        $event = Event::findOrFail($eventId);
+        $image = EventImage::findOrFail($imageId);
+        
+        if ($image->event_id != $event->id) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+        
+        \Storage::disk('public')->delete($image->image_path);
+        $image->delete();
+        
+        return response()->json(['success' => true]);
+    }
+
+    /**
+     * Upload image helper method
+     */
+    private function uploadImage($file, $folder)
+    {
+        if ($file->getSize() > 2048 * 1024) {
+            $img = Image::make($file)->resize(800, 600, function ($c) { 
+                $c->aspectRatio(); 
+                $c->upsize(); 
+            })->encode('jpg', 80);
+            $filename = $folder . '/' . uniqid() . '.jpg';
+            \Storage::disk('public')->put($filename, $img);
+            return $filename;
+        } else {
+            return $file->store($folder, 'public');
+        }
     }
 
     /**
