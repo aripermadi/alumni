@@ -13,7 +13,11 @@
         </div>
     </form>
     <div id="alumni-list"></div>
-    <button id="load-more" class="btn btn-primary mt-4">Load More</button>
+    <div class="text-center my-4">
+        <button id="load-more" class="btn btn-primary btn-lg rounded-pill px-5 shadow-sm">
+            <i class="fas fa-chevron-down me-1"></i> Lihat Angkatan Lainnya
+        </button>
+    </div>
 </div>
 @endsection
 
@@ -33,6 +37,9 @@
 .alumni-card .d-flex.justify-content-center.align-items-center {
     min-height: 120px;
 }
+#load-more[disabled] {
+    opacity: 0.7;
+}
 </style>
 @endpush
 
@@ -41,11 +48,11 @@
 <script>
 let page = 1;
 function loadAngkatan() {
-    $('#load-more').prop('disabled', true).text('Loading...');
+    $('#load-more').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Loading...');
     $.get("{{ route('alumni.ajax-angkatan') }}", {page}, function(res) {
         if(res.alumni) $('#alumni-list').append(res.alumni);
         if(res.hasMore) {
-            $('#load-more').prop('disabled', false).text('Lihat Angkatan Lainnya');
+            $('#load-more').prop('disabled', false).html('<i class="fas fa-chevron-down me-1"></i> Lihat Angkatan Lainnya');
             page++;
         } else {
             $('#load-more').hide();

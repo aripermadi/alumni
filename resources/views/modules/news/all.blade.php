@@ -12,7 +12,11 @@
         </div>
     </form>
     <div class="row g-4" id="news-list"></div>
-    <button id="load-more" class="btn btn-primary mt-4">Load More</button>
+    <div class="text-center my-4">
+        <button id="load-more" class="btn btn-primary btn-lg rounded-pill px-5 shadow-sm">
+            <i class="fas fa-chevron-down me-1"></i> Load More
+        </button>
+    </div>
 </div>
 @endsection
 
@@ -48,6 +52,9 @@
 .input-group .btn {
     border-radius: 0 1rem 1rem 0;
 }
+#load-more[disabled] {
+    opacity: 0.7;
+}
 </style>
 @endpush
 
@@ -56,11 +63,11 @@
 <script>
 let page = 1;
 function loadNews() {
-    $('#load-more').prop('disabled', true).text('Loading...');
+    $('#load-more').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Loading...');
     $.get("{{ route('news.ajax-all') }}", {page, q: '{{ request('q') }}'}, function(res) {
         if(res.news) $('#news-list').append(res.news);
         if(res.hasMore) {
-            $('#load-more').prop('disabled', false).text('Load More');
+            $('#load-more').prop('disabled', false).html('<i class="fas fa-chevron-down me-1"></i> Load More');
             page++;
         } else {
             $('#load-more').hide();
