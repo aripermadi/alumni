@@ -13,8 +13,9 @@
     </form>
     <div class="row g-4" id="news-list"></div>
     <div class="text-center my-4">
-        <button id="load-more" class="btn btn-primary btn-lg rounded-pill px-5 shadow-sm">
-            <i class="fas fa-chevron-down me-1"></i> Load More
+        <button id="load-more" class="btn btn-loadmore" type="button">
+            <span class="spinner-border spinner-border-sm me-2 d-none" id="loadmore-spinner"></span>
+            <span class="loadmore-text"><i class="fas fa-angle-down me-1"></i>Load More</span>
         </button>
     </div>
 </div>
@@ -55,6 +56,29 @@
 #load-more[disabled] {
     opacity: 0.7;
 }
+.btn-loadmore {
+    background: #0d6efd;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 0.75rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: none;
+    outline: none;
+}
+.btn-loadmore:hover, .btn-loadmore:focus {
+    background: #0b5ed7;
+    color: #fff;
+}
+.btn-loadmore:disabled {
+    opacity: 0.7;
+}
+.btn-loadmore .fa-angle-down {
+    font-size: 1.1em;
+    vertical-align: middle;
+}
 </style>
 @endpush
 
@@ -62,12 +86,23 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 let page = 1;
+function setLoading(isLoading) {
+    if(isLoading) {
+        $('#load-more').prop('disabled', true);
+        $('#loadmore-spinner').removeClass('d-none');
+        $('.loadmore-text').text('Loading...');
+    } else {
+        $('#load-more').prop('disabled', false);
+        $('#loadmore-spinner').addClass('d-none');
+        $('.loadmore-text').html('<i class="fas fa-angle-down me-1"></i>Load More');
+    }
+}
 function loadNews() {
-    $('#load-more').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Loading...');
+    setLoading(true);
     $.get("{{ route('news.ajax-all') }}", {page, q: '{{ request('q') }}'}, function(res) {
         if(res.news) $('#news-list').append(res.news);
         if(res.hasMore) {
-            $('#load-more').prop('disabled', false).html('<i class="fas fa-chevron-down me-1"></i> Load More');
+            setLoading(false);
             page++;
         } else {
             $('#load-more').hide();
